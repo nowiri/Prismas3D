@@ -1,28 +1,28 @@
 package logic;
-public class constCuadrangular {
-    public static void main(String[] args) {
+
+public class constRectangular {
+	public static void main(String[] args) {
 
         double x1 = 4;
-        //double x2 = 4;
         double y1 = 4;
-        //double y2 = 2;
+        double alt = 3;
         
-        double dist = 10;
+        double a = 1;
+        double b = 2;
         
         double x2,x3,x4;
         double y2,y3, y4;
         
-        double alt = 15;
         x2 = x1;
-        y2 = y1 - dist;
-        x3 = x2 + dist;
-        x4 = x1 + dist;
+        y2 = y1 - a;
+        x3 = x2 + b;
+        x4 = x1 + b;
         y3 = y2;
         y4 = y1; 
         
         StdDraw3D.setScale(-10,10);
      //   StdDraw3D.setCameraDirection(x, y, z);
-        StdDraw3D.setCameraPosition(((x1+x3)/2),((y1+y3)/2),alt*2);
+        StdDraw3D.setCameraPosition(((x1+x3)/2),((y1+y3)/2),alt/2);
         StdDraw3D.setOrbitCenter(((x1+x3)/2),((y1+y3)/2),alt/2);
         StdDraw3D.setCameraPosition(((x1+x3)/2),((y1+y3)/2),alt*3);
         StdDraw3D.setPenColor(StdDraw3D.randomColor());
@@ -60,4 +60,6 @@ public class constCuadrangular {
 
         StdDraw3D.finished();
    }
+	
+
 }
