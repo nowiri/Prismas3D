@@ -2,19 +2,15 @@ package logic;
 
 public class Rectangular extends Prisma {
 	
-	private float x1,y1,x2,y2,x3,y3;
+	private float x1,y1;
 	private float ladoA, ladob;
 
-	public Rectangular(float altura, float x1, float y1, float x2, float y2, float x3, float y3) {
+	public Rectangular(float altura, float x1, float y1, float ladoA, float ladoB) {
 		super(altura);
 		this.x1 = x1;
 		this.y1 = y1;
-		this.x2 = x2;
-		this.y2 = y2;
-		this.x3 = x3;
-		this.y3 = y3;
-		this.ladoA = super.distancia((x2-x3),(y2-y3));
-		this.ladob = super.distancia((x2-x1),(y2-y1));
+		this.ladoA = ladoA;
+		this.ladob = ladoB;
 		super.figuraBase = "Rectángulo";		
 	}
 	
@@ -31,30 +27,7 @@ public class Rectangular extends Prisma {
 	public void setY1(float y1) {
 		this.y1 = y1;
 	}
-	public float getX2() {
-		return x2;
-	}
-	public void setX2(float x2) {
-		this.x2 = x2;
-	}
-	public float getY2() {
-		return y2;
-	}
-	public void setY2(float y2) {
-		this.y2 = y2;
-	}
-	public float getX3() {
-		return x3;
-	}
-	public void setX3(float x3) {
-		this.x3 = x3;
-	}
-	public float getY3() {
-		return y3;
-	}
-	public void setY3(float y3) {
-		this.y3 = y3;
-	}
+	
 	public float getLadoA() {
 		return ladoA;
 	}
@@ -67,7 +40,6 @@ public class Rectangular extends Prisma {
 	public void setLadob(float ladob) {
 		this.ladob = ladob;
 	}
-	
 	
 	@Override
 	public float areaLateral() {

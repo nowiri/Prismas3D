@@ -5,22 +5,19 @@ public class Triangular extends Prisma {
 	float x1,y1,x2,y2,x3,y3;
 	float base,h,lado1,lado2;
 
-	public Triangular(float altura, float x1, float y1, float x2, float y2, float x3, float y3) {
+	public Triangular(float altura, float x1, float y1, float x3, float y3, float base) {
 		super(altura);
 		this.x1 = x1;
 		this.y1 = y1;
-		this.x2 = x2;
-		this.y2 = y2;
 		this.x3 = x3;
 		this.y3 = y3;
-		this.base = super.distancia((x1-x2),(y1-y2));
-		this.h = super.distancia((x3-x3),(y3-y1));
-		this.lado1 = super.distancia((x3-x1),(y3-y1));
-		this.lado2 = super.distancia((x3-x2),(y3-y2));
+		this.base = base;
+		this.h = y3-y1;
+		this.lado1 = (float)(Math.sqrt(Math.pow(x3-x1,2)+Math.pow(y3-y1,2)));
+		this.lado2 = (float)(Math.sqrt(Math.pow(x3-(x1+base),2)+Math.pow(y3-y1,2)));
 		super.figuraBase = "Triangulo";
 	}
 
-	
 	public float getX1() {
 		return x1;
 	}

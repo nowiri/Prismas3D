@@ -5,11 +5,10 @@ public class constTrapezoidal {
 
         double x1 = 0;
         double y1 = 0;
-        double x2 = 1;
+        double x2 = 3;
         double y2 = 3;
         double alt = 3;
-        
-        double B = 4;
+        double B = 8;
         double b = 2;
         
         double x3,x4;

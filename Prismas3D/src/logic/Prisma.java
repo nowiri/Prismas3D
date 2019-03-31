@@ -32,11 +32,7 @@ public abstract class Prisma {
 		float vol = areaBase() * altura;
 		return vol;
 	}
-	
-	public float distancia(float x, float y) {
-		float D = (float)(Math.sqrt(Math.pow(x,2)+Math.pow(y,2)));
-		return D;
-	}
+
 	public float areaTotal() {
 		float at = 2*areaBase() + areaLateral();
 		return at;

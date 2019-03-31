@@ -3,16 +3,13 @@ package logic;
 public class Cuadrangular extends Prisma {
 	
 	private float x1,x2;
-	private float y1,y2;
 	private float lado;
 	
-	public Cuadrangular(float altura, float x1, float y1, float x2, float y2) {
+	public Cuadrangular(float altura, float x1, float y1, float lado) {
 		super(altura);
 		this.x1 = x1;
 		this.x2 = x2;
-		this.y1 = y1;
-		this.y2 = y2;
-		this.lado = super.distancia((x2-x1),(y2-y1));
+		this.lado = lado;
 		super.figuraBase = "Cuadrado";
 	}
 
@@ -28,17 +25,13 @@ public class Cuadrangular extends Prisma {
 	public void setX2(float x2) {
 		this.x2 = x2;
 	}
-	public float getY1() {
-		return y1;
+	
+	public float getLado() {
+		return lado;
 	}
-	public void setY1(float y1) {
-		this.y1 = y1;
-	}
-	public float getY2() {
-		return y2;
-	}
-	public void setY2(float y2) {
-		this.y2 = y2;
+
+	public void setLado(float lado) {
+		this.lado = lado;
 	}
 
 	@Override

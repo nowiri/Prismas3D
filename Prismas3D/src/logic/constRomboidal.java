@@ -5,7 +5,7 @@ public class constRomboidal {
 	double x1 = 4;
 	double y1 = 4;
 	float alt = 4;
-	float D = 5;
+	float D = 3;
 	float d = 3;
 	
 	double x2 = x1 - (d/2);

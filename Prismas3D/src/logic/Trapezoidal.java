@@ -2,24 +2,20 @@ package logic;
 
 public class Trapezoidal extends Prisma {
 	
-	float x1,y1,x2,y2,x3,y3,x4,y4;
+	float x1,y1,x2,y2;
 	float baseMenor, baseMayor,h,lado1,lado2;
 
-	public Trapezoidal(float altura, float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
+	public Trapezoidal(float altura, float x1, float y1, float x2, float y2, float baseMayor, float baseMenor) {
 		super(altura);
 		this.x1 = x1;
 		this.y1 = y1;
 		this.x2 = x2;
 		this.y2 = y2;
-		this.x3 = x3;
-		this.y3 = y3;
-		this.x4 = x4;
-		this.y4 = y4;
-		this.baseMayor = super.distancia((x3-x4),(y3-y4));
-		this.h = super.distancia((x1-x1),(y1-y3));
-		this.baseMenor = super.distancia((x1-x2),(y1-y2));
-		this.lado1 = super.distancia((x1-x3),(y1-y3));
-		this.lado2 = super.distancia((x2-x4),(y2-y4));
+		this.baseMayor = baseMayor;
+		this.h = y2-y1;
+		this.baseMenor = baseMenor;
+		this.lado1 = (float)(Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2)));
+		this.lado2 = (float)(Math.sqrt(Math.pow((x2+baseMenor)-(x1+baseMayor),2)+Math.pow(y2-y1,2)));
 	}
 	
 	
@@ -47,30 +43,7 @@ public class Trapezoidal extends Prisma {
 	public void setY2(float y2) {
 		this.y2 = y2;
 	}
-	public float getX3() {
-		return x3;
-	}
-	public void setX3(float x3) {
-		this.x3 = x3;
-	}
-	public float getY3() {
-		return y3;
-	}
-	public void setY3(float y3) {
-		this.y3 = y3;
-	}
-	public float getX4() {
-		return x4;
-	}
-	public void setX4(float x4) {
-		this.x4 = x4;
-	}
-	public float getY4() {
-		return y4;
-	}
-	public void setY4(float y4) {
-		this.y4 = y4;
-	}
+	
 	public float getBaseMenor() {
 		return baseMenor;
 	}
@@ -101,7 +74,6 @@ public class Trapezoidal extends Prisma {
 	public void setLado2(float lado2) {
 		this.lado2 = lado2;
 	}
-
 
 
 	@Override

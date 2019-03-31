@@ -2,17 +2,15 @@ package logic;
 public class constCuadrangular {
     public static void main(String[] args) {
 
-        double x1 = 4;
-        //double x2 = 4;
-        double y1 = 4;
-        //double y2 = 2;
-        
-        double dist = 10;
+        double x1 = 0;
+        double y1 = 0;
+        double dist = 15;
+        double alt = 2;
         
         double x2,x3,x4;
         double y2,y3, y4;
         
-        double alt = 15;
+
         x2 = x1;
         y2 = y1 - dist;
         x3 = x2 + dist;
