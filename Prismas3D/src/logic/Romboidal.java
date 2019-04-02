@@ -5,7 +5,6 @@ public class Romboidal extends Prisma {
 	private float x1,y1;
 	private float lado,D,d;
 	
-	
 	public Romboidal(float altura, float x1, float y1, float D, float d) {
 		super(altura);
 		this.x1 = x1;

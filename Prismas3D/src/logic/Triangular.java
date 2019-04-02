@@ -2,7 +2,7 @@ package logic;
 
 public class Triangular extends Prisma {
 	
-	float x1,y1,x2,y2,x3,y3;
+	float x1,y1,x3,y3;
 	float base,h,lado1,lado2;
 
 	public Triangular(float altura, float x1, float y1, float x3, float y3, float base) {
@@ -29,18 +29,6 @@ public class Triangular extends Prisma {
 	}
 	public void setY1(float y1) {
 		this.y1 = y1;
-	}
-	public float getX2() {
-		return x2;
-	}
-	public void setX2(float x2) {
-		this.x2 = x2;
-	}
-	public float getY2() {
-		return y2;
-	}
-	public void setY2(float y2) {
-		this.y2 = y2;
 	}
 	public float getX3() {
 		return x3;

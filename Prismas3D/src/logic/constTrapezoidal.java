@@ -7,7 +7,7 @@ public class constTrapezoidal {
         double y1 = 0;
         double x2 = 3;
         double y2 = 3;
-        double alt = 3;
+        double alt = 5;
         double B = 8;
         double b = 2;
         
@@ -19,11 +19,11 @@ public class constTrapezoidal {
         y3 = y2;
         y4 = y1; 
         
+
         StdDraw3D.setScale(-10,10);
      //   StdDraw3D.setCameraDirection(x, y, z);
-        StdDraw3D.setCameraPosition(((x1+x3)/2),((y1+y3)/2),alt/2);
-        StdDraw3D.setOrbitCenter(((x1+x3)/2),((y1+y3)/2),alt/2);
-        StdDraw3D.setCameraPosition(((x1+x3)/2),((y1+y3)/2),alt*3);
+        StdDraw3D.setCameraPosition((x4-x1)/2,((y2-y1)/2),alt*5);
+        StdDraw3D.setOrbitCenter(((x4-x1)/2),((y2-y1)/2),alt/2);
         StdDraw3D.setPenColor(StdDraw3D.randomColor());
         StdDraw3D.setInfoDisplay(false);
         
@@ -56,8 +56,8 @@ public class constTrapezoidal {
         double zl4[] = new double[]{0,0,alt,alt};
         StdDraw3D.setPenColor(StdDraw3D.randomColor());
         StdDraw3D.polygon(xl4,yl4,zl4);
-
         StdDraw3D.finished();
+        
    }
 	
 
