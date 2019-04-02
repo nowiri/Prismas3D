@@ -35,6 +35,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Dimension;
 
 public class Principal extends JFrame {
 
@@ -127,12 +128,12 @@ public class Principal extends JFrame {
 		
 		JSeparator separator = new JSeparator();
 		separator.setForeground(Color.DARK_GRAY);
-		separator.setBounds(34, 108, 104, 2);
+		separator.setBounds(34, 96, 80, 2);
 		panel.add(separator);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(Color.DARK_GRAY);
-		separator_1.setBounds(34, 289, 104, 2);
+		separator_1.setBounds(34, 289, 80, 2);
 		panel.add(separator_1);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("CUENTAS");
@@ -158,14 +159,9 @@ public class Principal extends JFrame {
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblMenu = new JLabel("MENU");
-		lblMenu.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		lblMenu.setBounds(73, 82, 46, 14);
+		lblMenu.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		lblMenu.setBounds(34, 68, 64, 14);
 		panel.add(lblMenu);
-		
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(0, 0, 46, 14);
-		contentPane.add(lblNewLabel);
 		
 		
 		
