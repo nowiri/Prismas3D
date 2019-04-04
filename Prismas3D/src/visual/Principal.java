@@ -120,9 +120,10 @@ public class Principal extends JFrame {
 		pnlContenido.add(panelPrincipal, "name_81812329842485");
 		panelPrincipal.setLayout(null);
 		
-		JLabel lblNewLabel_2 = new JLabel("PRINCIPAL");
-		lblNewLabel_2.setBounds(0, 0, 133, 14);
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setBounds(0, 0, 927, 399);
 		panelPrincipal.add(lblNewLabel_2);
+		lblNewLabel_2.setIcon(new ImageIcon(Principal.class.getResource("/resources/3d-Pie-Chart1.png")));
 		
 		panelRegistrar = new JPanel();
 		panelRegistrar.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.LIGHT_GRAY));
@@ -798,6 +799,12 @@ public class Principal extends JFrame {
 		mntmCuentas.setBackground(new Color(112, 128, 144));
 		mntmCuentas.setBounds(31, 470, 156, 45);
 		panelMenu.add(mntmCuentas);
+		
+		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setBorder(null);
+		lblNewLabel_3.setIcon(new ImageIcon(Principal.class.getResource("/resources/3d (1).png")));
+		lblNewLabel_3.setBounds(31, 28, 130, 137);
+		panelMenu.add(lblNewLabel_3);
 		
 		pnlTitulo = new JPanel();
 		pnlTitulo.setBackground(new Color(0, 151, 167));
