@@ -2,7 +2,14 @@ package visual;
 
 import java.awt.BorderLayout;
 import javafx.scene.image.*;
-import javafx.scene.paint.*; 
+import javafx.scene.paint.*;
+import logic.Centro;
+import logic.Cuadrangular;
+import logic.Rectangular;
+import logic.Romboidal;
+import logic.Trapezoidal;
+import logic.Triangular;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -26,6 +33,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import java.awt.Font;
 import javax.swing.ImageIcon;
@@ -59,12 +67,12 @@ public class Principal extends JFrame {
 	private JPanel pnlGraficar;
 	private JPanel pnlGeometria;
 	private JPanel pnlCuentas;
-	private JTextField textField;
-	private JRadioButton botonCuadrado;
-	private JRadioButton botonRect;
-	JRadioButton botonTriang;
+	private JTextField txtRNombre;
+	private JRadioButton rdbtnCuadrado;
+	private JRadioButton rdbtnRectan;
+	JRadioButton rdbtnTriangulo;
 	JRadioButton rdbtnTrapecio;
-	JRadioButton botonRombo;
+	JRadioButton rdbtnRombo;
     JPanel panelRect;
 	JPanel panelRombo;
 	JPanel panelCuadrado;
@@ -96,6 +104,7 @@ public class Principal extends JFrame {
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1141, 677);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		contentPane.setBackground(Color.WHITE);
@@ -155,20 +164,20 @@ public class Principal extends JFrame {
 		label_16.setBounds(25, 51, 46, 14);
 		panelCuadrado.add(label_16);
 		
-		JSpinner spinner_11 = new JSpinner();
-		spinner_11.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_11.setBounds(65, 48, 29, 20);
-		panelCuadrado.add(spinner_11);
+		final JSpinner spnr_x1cuad = new JSpinner();
+		spnr_x1cuad.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
+		spnr_x1cuad.setBounds(65, 48, 29, 20);
+		panelCuadrado.add(spnr_x1cuad);
 		
 		JLabel label_17 = new JLabel("Y1:");
 		label_17.setFont(new Font("Arial", Font.BOLD, 11));
 		label_17.setBounds(108, 51, 46, 14);
 		panelCuadrado.add(label_17);
 		
-		JSpinner spinner_12 = new JSpinner();
-		spinner_12.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_12.setBounds(148, 48, 29, 20);
-		panelCuadrado.add(spinner_12);
+		final JSpinner spnr_y1cuad = new JSpinner();
+		spnr_y1cuad.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
+		spnr_y1cuad.setBounds(148, 48, 29, 20);
+		panelCuadrado.add(spnr_y1cuad);
 		
 		JLabel label_18 = new JLabel("Longitudes: ");
 		label_18.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -187,10 +196,10 @@ public class Principal extends JFrame {
 		label_19.setBounds(262, 51, 46, 14);
 		panelCuadrado.add(label_19);
 		
-		JSpinner spinner_13 = new JSpinner();
-		spinner_13.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_13.setBounds(325, 48, 29, 20);
-		panelCuadrado.add(spinner_13);
+		final JSpinner spnr_ladoCuad = new JSpinner();
+		spnr_ladoCuad.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_ladoCuad.setBounds(325, 48, 29, 20);
+		panelCuadrado.add(spnr_ladoCuad);
 		
 		panelRect = new JPanel();
 		panelRect.setLayout(null);
@@ -208,20 +217,20 @@ public class Principal extends JFrame {
 		label_21.setBounds(25, 51, 46, 14);
 		panelRect.add(label_21);
 		
-		JSpinner spinner_14 = new JSpinner();
-		spinner_14.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_14.setBounds(65, 48, 29, 20);
-		panelRect.add(spinner_14);
+		final JSpinner spnr_x1rect = new JSpinner();
+		spnr_x1rect.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_x1rect.setBounds(65, 48, 29, 20);
+		panelRect.add(spnr_x1rect);
 		
 		JLabel label_22 = new JLabel("Y1:");
 		label_22.setFont(new Font("Arial", Font.BOLD, 11));
 		label_22.setBounds(108, 51, 46, 14);
 		panelRect.add(label_22);
 		
-		JSpinner spinner_15 = new JSpinner();
-		spinner_15.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_15.setBounds(148, 48, 29, 20);
-		panelRect.add(spinner_15);
+		final JSpinner spnr_y1rect = new JSpinner();
+		spnr_y1rect.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_y1rect.setBounds(148, 48, 29, 20);
+		panelRect.add(spnr_y1rect);
 		
 		JLabel label_23 = new JLabel("Longitudes: ");
 		label_23.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -240,19 +249,19 @@ public class Principal extends JFrame {
 		label_24.setBounds(262, 51, 46, 14);
 		panelRect.add(label_24);
 		
-		JSpinner spinner_16 = new JSpinner();
-		spinner_16.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_16.setBounds(325, 48, 29, 20);
-		panelRect.add(spinner_16);
+		final JSpinner spnr_ladoArect = new JSpinner();
+		spnr_ladoArect.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_ladoArect.setBounds(325, 48, 29, 20);
+		panelRect.add(spnr_ladoArect);
 		
 		JLabel label_25 = new JLabel("Lado B:");
 		label_25.setFont(new Font("Arial", Font.BOLD, 11));
 		label_25.setBounds(262, 80, 46, 14);
 		panelRect.add(label_25);
 		
-		JSpinner spinner_17 = new JSpinner();
-		spinner_17.setBounds(325, 77, 29, 20);
-		panelRect.add(spinner_17);
+		final JSpinner spnr_ladoBrect = new JSpinner();
+		spnr_ladoBrect.setBounds(325, 77, 29, 20);
+		panelRect.add(spnr_ladoBrect);
 		
 		panelRombo = new JPanel();
 		panelRombo.setBorder(new TitledBorder(null, "DATOS", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
@@ -270,20 +279,20 @@ public class Principal extends JFrame {
 		label_30.setFont(new Font("Arial", Font.BOLD, 11));
 		panelRombo.add(label_30);
 		
-		JSpinner spinner_19 = new JSpinner();
-		spinner_19.setBounds(53, 68, 31, 20);
-		spinner_19.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		panelRombo.add(spinner_19);
+		final JSpinner spnr_x1rombo = new JSpinner();
+		spnr_x1rombo.setBounds(53, 68, 31, 20);
+		spnr_x1rombo.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		panelRombo.add(spnr_x1rombo);
 		
 		JLabel label_31 = new JLabel("Y1:");
 		label_31.setBounds(89, 71, 16, 14);
 		label_31.setFont(new Font("Arial", Font.BOLD, 11));
 		panelRombo.add(label_31);
 		
-		JSpinner spinner_20 = new JSpinner();
-		spinner_20.setBounds(110, 68, 31, 20);
-		spinner_20.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		panelRombo.add(spinner_20);
+		final JSpinner spnr_y1rombo = new JSpinner();
+		spnr_y1rombo.setBounds(110, 68, 31, 20);
+		spnr_y1rombo.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		panelRombo.add(spnr_y1rombo);
 		
 		JLabel label_32 = new JLabel("Longitudes: ");
 		label_32.setBounds(402, 31, 68, 15);
@@ -302,20 +311,20 @@ public class Principal extends JFrame {
 		lblBaseB.setFont(new Font("Arial", Font.BOLD, 11));
 		panelRombo.add(lblBaseB);
 		
-		JSpinner spinner_21 = new JSpinner();
-		spinner_21.setBounds(455, 65, 31, 20);
-		spinner_21.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		panelRombo.add(spinner_21);
+		final JSpinner spnr_Drombo = new JSpinner();
+		spnr_Drombo.setBounds(455, 65, 31, 20);
+		spnr_Drombo.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		panelRombo.add(spnr_Drombo);
 		
 		JLabel lblBaseB_1 = new JLabel("Base d:");
 		lblBaseB_1.setBounds(402, 103, 40, 14);
 		lblBaseB_1.setFont(new Font("Arial", Font.BOLD, 11));
 		panelRombo.add(lblBaseB_1);
 		
-		JSpinner spinner_22 = new JSpinner();
-		spinner_22.setBounds(455, 100, 31, 20);
-		spinner_22.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		panelRombo.add(spinner_22);
+		final JSpinner spnr_drombo = new JSpinner();
+		spnr_drombo.setBounds(455, 100, 31, 20);
+		spnr_drombo.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		panelRombo.add(spnr_drombo);
 		
 		JSeparator separator_5 = new JSeparator();
 		separator_5.setOrientation(SwingConstants.VERTICAL);
@@ -340,20 +349,20 @@ public class Principal extends JFrame {
 		label_1.setBounds(91, 74, 16, 14);
 		panelTrap.add(label_1);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner.setBounds(131, 71, 29, 20);
-		panelTrap.add(spinner);
+		final JSpinner spnr_x1trap = new JSpinner();
+		spnr_x1trap.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_x1trap.setBounds(131, 71, 29, 20);
+		panelTrap.add(spnr_x1trap);
 		
 		JLabel label_2 = new JLabel("Y1:");
 		label_2.setFont(new Font("Arial", Font.BOLD, 11));
 		label_2.setBounds(174, 74, 16, 14);
 		panelTrap.add(label_2);
 		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_1.setBounds(214, 71, 29, 20);
-		panelTrap.add(spinner_1);
+		final JSpinner spnr_y1trap = new JSpinner();
+		spnr_y1trap.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_y1trap.setBounds(214, 71, 29, 20);
+		panelTrap.add(spnr_y1trap);
 		
 		JLabel label_3 = new JLabel("Longitudes: ");
 		label_3.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -372,40 +381,40 @@ public class Principal extends JFrame {
 		label_4.setBounds(542, 73, 41, 14);
 		panelTrap.add(label_4);
 		
-		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_2.setBounds(605, 70, 29, 20);
-		panelTrap.add(spinner_2);
+		final JSpinner spnr_Btrap = new JSpinner();
+		spnr_Btrap.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_Btrap.setBounds(605, 70, 29, 20);
+		panelTrap.add(spnr_Btrap);
 		
 		JLabel label_5 = new JLabel("X2:");
 		label_5.setFont(new Font("Arial", Font.BOLD, 11));
 		label_5.setBounds(91, 109, 16, 14);
 		panelTrap.add(label_5);
 		
-		JSpinner spinner_3 = new JSpinner();
-		spinner_3.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_3.setBounds(131, 106, 29, 20);
-		panelTrap.add(spinner_3);
+		final JSpinner spnr_x2trap = new JSpinner();
+		spnr_x2trap.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_x2trap.setBounds(131, 106, 29, 20);
+		panelTrap.add(spnr_x2trap);
 		
 		JLabel label_6 = new JLabel("Y2:");
 		label_6.setFont(new Font("Arial", Font.BOLD, 11));
 		label_6.setBounds(174, 109, 16, 14);
 		panelTrap.add(label_6);
 		
-		JSpinner spinner_4 = new JSpinner();
-		spinner_4.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_4.setBounds(214, 106, 29, 20);
-		panelTrap.add(spinner_4);
+		final JSpinner spnr_y2trap = new JSpinner();
+		spnr_y2trap.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_y2trap.setBounds(214, 106, 29, 20);
+		panelTrap.add(spnr_y2trap);
 		
 		JLabel label_7 = new JLabel("Base b:");
 		label_7.setFont(new Font("Arial", Font.BOLD, 11));
 		label_7.setBounds(542, 105, 41, 14);
 		panelTrap.add(label_7);
 		
-		JSpinner spinner_5 = new JSpinner();
-		spinner_5.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_5.setBounds(605, 102, 29, 20);
-		panelTrap.add(spinner_5);
+		final JSpinner spnr_btrap = new JSpinner();
+		spnr_btrap.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_btrap.setBounds(605, 102, 29, 20);
+		panelTrap.add(spnr_btrap);
 		
 		panelTriang = new JPanel();
 		panel.add(panelTriang, "name_176822385533174");
@@ -423,20 +432,20 @@ public class Principal extends JFrame {
 		label_9.setBounds(25, 51, 16, 14);
 		panelTriang.add(label_9);
 		
-		JSpinner spinner_6 = new JSpinner();
-		spinner_6.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_6.setBounds(65, 48, 29, 20);
-		panelTriang.add(spinner_6);
+		final JSpinner spnr_x1trian = new JSpinner();
+		spnr_x1trian.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_x1trian.setBounds(65, 48, 29, 20);
+		panelTriang.add(spnr_x1trian);
 		
 		JLabel label_10 = new JLabel("Y1:");
 		label_10.setFont(new Font("Arial", Font.BOLD, 11));
 		label_10.setBounds(108, 51, 16, 14);
 		panelTriang.add(label_10);
 		
-		JSpinner spinner_7 = new JSpinner();
-		spinner_7.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_7.setBounds(148, 48, 29, 20);
-		panelTriang.add(spinner_7);
+		final JSpinner spnr_y1trian = new JSpinner();
+		spnr_y1trian.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_y1trian.setBounds(148, 48, 29, 20);
+		panelTriang.add(spnr_y1trian);
 		
 		JLabel label_11 = new JLabel("Longitudes: ");
 		label_11.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -455,30 +464,30 @@ public class Principal extends JFrame {
 		label_12.setBounds(262, 51, 41, 14);
 		panelTriang.add(label_12);
 		
-		JSpinner spinner_8 = new JSpinner();
-		spinner_8.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_8.setBounds(325, 48, 29, 20);
-		panelTriang.add(spinner_8);
+		final JSpinner spnr_basetrian = new JSpinner();
+		spnr_basetrian.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_basetrian.setBounds(325, 48, 29, 20);
+		panelTriang.add(spnr_basetrian);
 		
 		JLabel label_13 = new JLabel("X2:");
 		label_13.setFont(new Font("Arial", Font.BOLD, 11));
 		label_13.setBounds(25, 86, 16, 14);
 		panelTriang.add(label_13);
 		
-		JSpinner spinner_9 = new JSpinner();
-		spinner_9.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_9.setBounds(65, 83, 29, 20);
-		panelTriang.add(spinner_9);
+		final JSpinner spnr_x2trian = new JSpinner();
+		spnr_x2trian.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_x2trian.setBounds(65, 83, 29, 20);
+		panelTriang.add(spnr_x2trian);
 		
 		JLabel label_14 = new JLabel("Y2:");
 		label_14.setFont(new Font("Arial", Font.BOLD, 11));
 		label_14.setBounds(108, 86, 16, 14);
 		panelTriang.add(label_14);
 		
-		JSpinner spinner_10 = new JSpinner();
-		spinner_10.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		spinner_10.setBounds(148, 83, 29, 20);
-		panelTriang.add(spinner_10);
+		final JSpinner spnr_y2trian = new JSpinner();
+		spnr_y2trian.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_y2trian.setBounds(148, 83, 29, 20);
+		panelTriang.add(spnr_y2trian);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBounds(10, 201, 845, 91);
@@ -487,14 +496,14 @@ public class Principal extends JFrame {
 		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "BASE DEL PRISMA", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_5.setBackground(Color.WHITE);
 		
-		botonCuadrado = new JRadioButton("Cuadrado");
-		botonCuadrado.addActionListener(new ActionListener() {
+		rdbtnCuadrado = new JRadioButton("Cuadrado");
+		rdbtnCuadrado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				botonCuadrado.setSelected(true);
-				botonRect.setSelected(false);
-				botonTriang.setSelected(false);
+				rdbtnCuadrado.setSelected(true);
+				rdbtnRectan.setSelected(false);
+				rdbtnTriangulo.setSelected(false);
 				rdbtnTrapecio.setSelected(false);
-				botonRombo.setSelected(false);
+				rdbtnRombo.setSelected(false);
 				panelRect.setVisible(false);
 				panelRombo.setVisible(false);
 				panelCuadrado.setVisible(true);
@@ -503,20 +512,20 @@ public class Principal extends JFrame {
 				
 			}
 		});
-		botonCuadrado.setSelected(true);
-		botonCuadrado.setFont(new Font("Arial", Font.BOLD, 11));
-		botonCuadrado.setBackground(Color.WHITE);
-		botonCuadrado.setBounds(25, 19, 119, 23);
-		panel_5.add(botonCuadrado);
+		rdbtnCuadrado.setSelected(true);
+		rdbtnCuadrado.setFont(new Font("Arial", Font.BOLD, 11));
+		rdbtnCuadrado.setBackground(Color.WHITE);
+		rdbtnCuadrado.setBounds(25, 19, 119, 23);
+		panel_5.add(rdbtnCuadrado);
 		
-		botonRect = new JRadioButton("Rect\u00E1ngulo");
-		botonRect.addActionListener(new ActionListener() {
+		rdbtnRectan = new JRadioButton("Rect\u00E1ngulo");
+		rdbtnRectan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				botonCuadrado.setSelected(false);
-				botonRect.setSelected(true);
-				botonTriang.setSelected(false);
+				rdbtnCuadrado.setSelected(false);
+				rdbtnRectan.setSelected(true);
+				rdbtnTriangulo.setSelected(false);
 				rdbtnTrapecio.setSelected(false);
-				botonRombo.setSelected(false);
+				rdbtnRombo.setSelected(false);
 				panelRect.setVisible(true);
 				panelRombo.setVisible(false);
 				panelCuadrado.setVisible(false);
@@ -524,19 +533,19 @@ public class Principal extends JFrame {
 				panelTrap.setVisible(false);
 			}
 		});
-		botonRect.setFont(new Font("Arial", Font.BOLD, 11));
-		botonRect.setBackground(Color.WHITE);
-		botonRect.setBounds(25, 49, 119, 23);
-		panel_5.add(botonRect);
+		rdbtnRectan.setFont(new Font("Arial", Font.BOLD, 11));
+		rdbtnRectan.setBackground(Color.WHITE);
+		rdbtnRectan.setBounds(25, 49, 119, 23);
+		panel_5.add(rdbtnRectan);
 		
-		 botonTriang = new JRadioButton("Tri\u00E1ngulo");
-		 botonTriang.addActionListener(new ActionListener() {
+		 rdbtnTriangulo = new JRadioButton("Tri\u00E1ngulo");
+		 rdbtnTriangulo.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
-		 		botonCuadrado.setSelected(false);
-		 		botonRect.setSelected(false);
-		 		botonTriang.setSelected(true);
+		 		rdbtnCuadrado.setSelected(false);
+		 		rdbtnRectan.setSelected(false);
+		 		rdbtnTriangulo.setSelected(true);
 		 		rdbtnTrapecio.setSelected(false);
-		 		botonRombo.setSelected(false);
+		 		rdbtnRombo.setSelected(false);
 		 		panelRect.setVisible(false);
 		 		panelRombo.setVisible(false);
 		 		panelCuadrado.setVisible(false);
@@ -544,19 +553,19 @@ public class Principal extends JFrame {
 		 		panelTrap.setVisible(false);
 		 	}
 		 });
-		 botonTriang.setFont(new Font("Arial", Font.BOLD, 11));
-		 botonTriang.setBackground(Color.WHITE);
-		 botonTriang.setBounds(198, 19, 119, 23);
-		 panel_5.add(botonTriang);
+		 rdbtnTriangulo.setFont(new Font("Arial", Font.BOLD, 11));
+		 rdbtnTriangulo.setBackground(Color.WHITE);
+		 rdbtnTriangulo.setBounds(198, 19, 119, 23);
+		 panel_5.add(rdbtnTriangulo);
 		 
 		 rdbtnTrapecio = new JRadioButton("Trapecio");
 		 rdbtnTrapecio.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
-		 		botonCuadrado.setSelected(false);
-		 		botonRect.setSelected(false);
-		 		botonTriang.setSelected(false);
+		 		rdbtnCuadrado.setSelected(false);
+		 		rdbtnRectan.setSelected(false);
+		 		rdbtnTriangulo.setSelected(false);
 		 		rdbtnTrapecio.setSelected(true);
-		 		botonRombo.setSelected(false);
+		 		rdbtnRombo.setSelected(false);
 		 		panelRect.setVisible(false);
 		 		panelRombo.setVisible(false);
 		 		panelCuadrado.setVisible(false);
@@ -569,14 +578,14 @@ public class Principal extends JFrame {
 		 rdbtnTrapecio.setBounds(198, 49, 119, 23);
 		 panel_5.add(rdbtnTrapecio);
 		 
-		 botonRombo = new JRadioButton("Rombo");
-		 botonRombo.addActionListener(new ActionListener() {
+		 rdbtnRombo = new JRadioButton("Rombo");
+		 rdbtnRombo.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
-		 		botonCuadrado.setSelected(false);
-		 		botonRect.setSelected(false);
-		 		botonTriang.setSelected(false);
+		 		rdbtnCuadrado.setSelected(false);
+		 		rdbtnRectan.setSelected(false);
+		 		rdbtnTriangulo.setSelected(false);
 		 		rdbtnTrapecio.setSelected(false);
-		 		botonRombo.setSelected(true);
+		 		rdbtnRombo.setSelected(true);
 		 		panelRect.setVisible(false);
 		 		panelRombo.setVisible(true);
 		 		panelCuadrado.setVisible(false);
@@ -584,10 +593,10 @@ public class Principal extends JFrame {
 		 		panelTrap.setVisible(false);
 		 	}
 		 });
-		 botonRombo.setFont(new Font("Arial", Font.BOLD, 11));
-		 botonRombo.setBackground(Color.WHITE);
-		 botonRombo.setBounds(373, 19, 97, 23);
-		 panel_5.add(botonRombo);
+		 rdbtnRombo.setFont(new Font("Arial", Font.BOLD, 11));
+		 rdbtnRombo.setBackground(Color.WHITE);
+		 rdbtnRombo.setBounds(373, 19, 97, 23);
+		 panel_5.add(rdbtnRombo);
 		 
 		 JLabel label_26 = new JLabel("Prismas");
 		 label_26.setBounds(125, 48, 111, 30);
@@ -599,24 +608,156 @@ public class Principal extends JFrame {
 		 panelRegistrar.add(label_27);
 		 label_27.setFont(new Font("Arial", Font.PLAIN, 12));
 		 
-		 textField = new JTextField();
-		 textField.setBounds(200, 108, 111, 20);
-		 panelRegistrar.add(textField);
-		 textField.setFont(new Font("Arial", Font.PLAIN, 11));
-		 textField.setColumns(10);
+		 txtRNombre = new JTextField();
+		 txtRNombre.setText("Mi_prisma");
+		 txtRNombre.setBounds(200, 108, 111, 20);
+		 panelRegistrar.add(txtRNombre);
+		 txtRNombre.setFont(new Font("Arial", Font.PLAIN, 11));
+		 txtRNombre.setColumns(10);
 		 
 		 JLabel label_28 = new JLabel("Altura:");
 		 label_28.setBounds(394, 107, 46, 14);
 		 panelRegistrar.add(label_28);
 		 label_28.setFont(new Font("Arial", Font.PLAIN, 12));
 		 
-		 JSpinner spinner_18 = new JSpinner();
-		 spinner_18.setBounds(483, 105, 111, 20);
-		 panelRegistrar.add(spinner_18);
-		 spinner_18.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
-		 spinner_18.setFont(new Font("Arial", Font.PLAIN, 11));
+		 final JSpinner spnrRAltura = new JSpinner();
+		 spnrRAltura.setBounds(483, 105, 111, 20);
+		 panelRegistrar.add(spnrRAltura);
+		 spnrRAltura.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		 spnrRAltura.setFont(new Font("Arial", Font.PLAIN, 11));
 		 
 		 JButton btnNewButton = new JButton("Guardar");
+		 btnNewButton.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 		int flag = -1; //indica que tipo de base se ha seleccionado
+		 		if(rdbtnCuadrado.isSelected())
+		 			flag = 0;
+		 		if(rdbtnRectan.isSelected())
+		 			flag = 1;
+		 		if(rdbtnRombo.isSelected())
+		 			flag = 2;
+		 		if(rdbtnTrapecio.isSelected())
+		 			flag = 3;
+		 		if(rdbtnTriangulo.isSelected())
+		 			flag = 4;
+		 		
+		 		float altura,x1,y1,x2,y2,lado,ladoA,ladoB,B,b,D,d,base; //variables que contienen los datos para la creacion de prismas
+		 		String nombre;
+		 		
+		 		switch(flag) { //para saber en que elementos buscar los datos, dependiendo del tipo de base seleccionada
+		 		case 0://cuadrado
+		 			try {
+		 				nombre = txtRNombre.getText();
+		 				altura = Float.parseFloat(spnrRAltura.getValue().toString());
+		 				x1 = Float.parseFloat(spnr_x1cuad.getValue().toString());
+		 				y1 = Float.parseFloat(spnr_y1cuad.getValue().toString());
+		 				lado = Float.parseFloat(spnr_ladoCuad.getValue().toString());
+		 				Cuadrangular aux = new Cuadrangular(altura,x1,y1,lado,nombre);
+			 			Centro.getInstance().addPrisma(aux);
+			 			JOptionPane.showMessageDialog(null, "Se ha creado el prisma cuadrangular con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
+			 			spnrRAltura.setValue(0);
+			 			spnr_x1cuad.setValue(0);
+			 			spnr_y1cuad.setValue(0);
+			 			spnr_ladoCuad.setValue(0);			
+		 			}catch(Exception e1) {
+		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
+		 			}
+		 			
+		 			break;
+		 		case 1://rectangulo
+		 			try {
+		 				nombre = txtRNombre.getText();
+		 				altura = Float.parseFloat(spnrRAltura.getValue().toString());
+			 			x1 = Float.parseFloat(spnr_x1rect.getValue().toString());
+			 			y1 = Float.parseFloat(spnr_y1rect.getValue().toString());
+			 			ladoA = Float.parseFloat(spnr_ladoArect.getValue().toString());
+			 			ladoB = Float.parseFloat(spnr_ladoBrect.getValue().toString());
+			 			Rectangular aux = new Rectangular(altura,x1,y1,ladoA,ladoB,nombre);
+			 			Centro.getInstance().addPrisma(aux);
+			 			JOptionPane.showMessageDialog(null, "Se ha creado el prisma rectangular con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
+			 			spnrRAltura.setValue(0);
+			 			spnr_x1rect.setValue(0);
+			 			spnr_y1rect.setValue(0);
+			 			spnr_ladoArect.setValue(0);
+			 			spnr_ladoBrect.setValue(0);
+		 			}catch(Exception e1) {
+		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
+		 			}
+		 			
+		 			break;
+		 		case 2://rombo
+		 			try {
+		 				nombre = txtRNombre.getText();
+		 				altura = Float.parseFloat(spnrRAltura.getValue().toString());
+			 			x1 = Float.parseFloat(spnr_x1rombo.getValue().toString());
+			 			y1 = Float.parseFloat(spnr_y1rombo.getValue().toString());
+			 			D = Float.parseFloat(spnr_Drombo.getValue().toString());
+			 			d = Float.parseFloat(spnr_drombo.getValue().toString());
+			 			Romboidal aux = new Romboidal(altura,x1,y1,D,d,nombre);
+			 			Centro.getInstance().addPrisma(aux);
+			 			JOptionPane.showMessageDialog(null, "Se ha creado el prisma romboidal con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
+			 			spnrRAltura.setValue(0);
+			 			spnr_x1rombo.setValue(0);
+			 			spnr_y1rombo.setValue(0);
+			 			spnr_Drombo.setValue(0);
+			 			spnr_drombo.setValue(0);
+		 			}catch(Exception e1) {
+		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
+		 			}
+		 			
+		 			break;
+		 		case 3://trapecio
+		 			try {
+		 				nombre = txtRNombre.getText();
+		 				altura = Float.parseFloat(spnrRAltura.getValue().toString());
+			 			x1 = Float.parseFloat(spnr_x1trap.getValue().toString());
+			 			y1 = Float.parseFloat(spnr_y1trap.getValue().toString());
+			 			x2 = Float.parseFloat(spnr_x2trap.getValue().toString());
+			 			y2 = Float.parseFloat(spnr_y2trap.getValue().toString());
+			 			B = Float.parseFloat(spnr_Btrap.getValue().toString());
+			 			b = Float.parseFloat(spnr_btrap.getValue().toString());
+			 			Trapezoidal aux = new Trapezoidal(altura,x1,y1,x2,y2,B,b,nombre);
+			 			Centro.getInstance().addPrisma(aux);
+			 			JOptionPane.showMessageDialog(null, "Se ha creado el prisma trapezoidal con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
+			 			spnrRAltura.setValue(0);
+			 			spnr_x1trap.setValue(0);
+			 			spnr_y1trap.setValue(0);
+			 			spnr_x2trap.setValue(0);
+			 			spnr_y2trap.setValue(0);
+			 			spnr_Btrap.setValue(0);
+			 			spnr_btrap.setValue(0);
+		 			}catch(Exception e1) {
+		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
+		 			}
+		 			
+		 			break;
+		 		case 4://triangulo
+		 			try {
+		 				nombre = txtRNombre.getText();
+		 				altura = Float.parseFloat(spnrRAltura.getValue().toString());
+			 			x1 = Float.parseFloat(spnr_x1trian.getValue().toString());
+			 			y1 = Float.parseFloat(spnr_y1trian.getValue().toString());
+			 			x2 = Float.parseFloat(spnr_x2trian.getValue().toString());
+			 			y2 = Float.parseFloat(spnr_y2trian.getValue().toString());
+			 			base = Float.parseFloat(spnr_basetrian.getValue().toString());
+			 			Triangular aux = new Triangular(altura,x1,y1,x2,y2,base,nombre);
+			 			Centro.getInstance().addPrisma(aux);
+			 			JOptionPane.showMessageDialog(null, "Se ha creado el prisma triangular con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
+			 			spnrRAltura.setValue(0);
+			 			spnr_x1trian.setValue(0);
+			 			spnr_y1trian.setValue(0);
+			 			spnr_x2trian.setValue(0);
+			 			spnr_y2trian.setValue(0);
+			 			spnr_basetrian.setValue(0);
+		 			}catch(Exception e1) {
+		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
+		 			}
+		 			
+		 			break;
+		 		}
+		 		
+		 	}
+		 });
 		 btnNewButton.setBounds(806, 553, 89, 23);
 		 panelRegistrar.add(btnNewButton);
 		

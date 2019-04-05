@@ -21,7 +21,6 @@ public class constRectangular {
         y4 = y1; 
         
         StdDraw3D.setScale(-10,10);
-     //   StdDraw3D.setCameraDirection(x, y, z);
         StdDraw3D.setCameraPosition(((x1+x3)/2),((y1+y3)/2),alt/2);
         StdDraw3D.setOrbitCenter(((x1+x3)/2),((y1+y3)/2),alt/2);
         StdDraw3D.setCameraPosition(((x1+x3)/2),((y1+y3)/2),alt*3);

@@ -5,8 +5,8 @@ public class Rectangular extends Prisma {
 	private float x1,y1;
 	private float ladoA, ladob;
 
-	public Rectangular(float altura, float x1, float y1, float ladoA, float ladoB) {
-		super(altura);
+	public Rectangular(float altura, float x1, float y1, float ladoA, float ladoB, String nombre) {
+		super(altura, nombre);
 		this.x1 = x1;
 		this.y1 = y1;
 		this.ladoA = ladoA;

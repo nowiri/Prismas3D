@@ -5,8 +5,8 @@ public class Romboidal extends Prisma {
 	private float x1,y1;
 	private float lado,D,d;
 	
-	public Romboidal(float altura, float x1, float y1, float D, float d) {
-		super(altura);
+	public Romboidal(float altura, float x1, float y1, float D, float d,  String nombre) {
+		super(altura, nombre);
 		this.x1 = x1;
 		this.y1 = y1;
 		this.lado = (float)(Math.sqrt(Math.pow(D/2,2)+Math.pow(d/2,2)));

@@ -23,6 +23,7 @@ import javax.swing.border.TitledBorder;
 public class GraficarPrisma extends JFrame {
 
 	private JPanel contentPane;
+	private JSlider slider;
 
 	/**
 	 * Launch the application.
@@ -56,7 +57,7 @@ public class GraficarPrisma extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) SystemColor.controlHighlight));
+		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color)SystemColor.controlHighlight));
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(389, 25, 287, 297);
 		contentPane.add(panel);
@@ -99,7 +100,8 @@ public class GraficarPrisma extends JFrame {
 		lblNewLabel_5.setBounds(10, 106, 46, 18);
 		panel_1.add(lblNewLabel_5);
 		
-		JSlider slider = new JSlider();
+		slider = new JSlider();
+		slider.setValue(2);
 		slider.setValueIsAdjusting(true);
 		slider.setInheritsPopupMenu(true);
 		slider.setForeground(Color.DARK_GRAY);

@@ -5,8 +5,8 @@ public class Cuadrangular extends Prisma {
 	private float x1,x2;
 	private float lado;
 	
-	public Cuadrangular(float altura, float x1, float y1, float lado) {
-		super(altura);
+	public Cuadrangular(float altura, float x1, float y1, float lado, String nombre) {
+		super(altura,nombre);
 		this.x1 = x1;
 		this.x2 = x2;
 		this.lado = lado;

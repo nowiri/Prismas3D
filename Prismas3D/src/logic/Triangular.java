@@ -5,8 +5,8 @@ public class Triangular extends Prisma {
 	float x1,y1,x3,y3;
 	float base,h,lado1,lado2;
 
-	public Triangular(float altura, float x1, float y1, float x3, float y3, float base) {
-		super(altura);
+	public Triangular(float altura, float x1, float y1, float x3, float y3, float base, String nombre) {
+		super(altura, nombre);
 		this.x1 = x1;
 		this.y1 = y1;
 		this.x3 = x3;

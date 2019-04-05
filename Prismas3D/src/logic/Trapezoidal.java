@@ -5,8 +5,8 @@ public class Trapezoidal extends Prisma {
 	float x1,y1,x2,y2;
 	float baseMenor, baseMayor,h,lado1,lado2;
 
-	public Trapezoidal(float altura, float x1, float y1, float x2, float y2, float baseMayor, float baseMenor) {
-		super(altura);
+	public Trapezoidal(float altura, float x1, float y1, float x2, float y2, float baseMayor, float baseMenor, String nombre) {
+		super(altura,nombre);
 		this.x1 = x1;
 		this.y1 = y1;
 		this.x2 = x2;

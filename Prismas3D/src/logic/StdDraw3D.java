@@ -95,7 +95,7 @@ KeyListener, ActionListener, ChangeListener, ComponentListener, WindowFocusListe
     // GUI Components
     private static JFrame frame;
     private static Panel canvasPanel;
-    private static JMenuBar menuBar;
+	private static JMenuBar menuBar;
     private static JMenu fileMenu, cameraMenu, graphicsMenu;
     private static JMenuItem loadButton, saveButton, save3DButton, quitButton;
     private static JSpinner fovSpinner;

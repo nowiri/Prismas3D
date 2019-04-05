@@ -4,10 +4,12 @@ public abstract class Prisma {
 	
 	protected float altura;
 	protected String figuraBase;
+	protected String nombre;
 	
-	public Prisma(float altura) {
+	public Prisma(float altura, String nombre) {
 		super();
 		this.altura = altura;
+		this.nombre = nombre;
 	}
 	
 	//Setters and getters
