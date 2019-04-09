@@ -48,6 +48,7 @@ public class Login extends JDialog {
 	public Login() {
 		setBounds(100, 100, 837, 480);
 		getContentPane().setLayout(new BorderLayout());
+		setLocationRelativeTo(null);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);

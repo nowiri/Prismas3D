@@ -49,7 +49,7 @@ public class ControlUsuarios implements Serializable{
 		ControlUsuarios.loginUser = loginUser;
 	}
 
-	public void regUser(Users user) {
+	public void Principal(Users user) {
 		misUsers.add(user);
 		
 	}

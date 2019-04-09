@@ -1,6 +1,8 @@
 package visual;
 
 import java.awt.BorderLayout;
+
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.*;
 import javafx.scene.paint.*;
 import logic.Centro;
@@ -9,6 +11,8 @@ import logic.Rectangular;
 import logic.Romboidal;
 import logic.Trapezoidal;
 import logic.Triangular;
+import logic.ControlUsuarios;
+import logic.Users;
 
 import java.awt.EventQueue;
 
@@ -53,6 +57,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import java.awt.Rectangle;
+import javax.swing.JPasswordField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 
 public class Principal extends JFrame {
@@ -80,6 +87,10 @@ public class Principal extends JFrame {
 	JPanel panelCuadrado;
 	JPanel panelTrap;
 	JPanel panelTriang;
+	private JTextField txtUsuario;
+	private JPasswordField txtPass;
+	private JPasswordField txtPass2;
+	private JComboBox comboBoxTipo;
 	
 
 	/**
@@ -820,10 +831,109 @@ public class Principal extends JFrame {
 		pnlContenido.add(panelCuentas, "name_81826270578843");
 		panelCuentas.setLayout(null);
 		
-		JLabel lblNewLabel_5 = new JLabel("CUENTAS");
+		JLabel lblNewLabel_5 = new JLabel("REGISTRAR NUEVA CUENTA");
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_5.setForeground(new Color(105,105,105));
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel_5.setEnabled(true);
-		lblNewLabel_5.setBounds(0, 0, 135, 14);
+		lblNewLabel_5.setBounds(90, 21, 366, 53);
 		panelCuentas.add(lblNewLabel_5);
+		
+		JLabel lblNewLabel_3 = new JLabel("Nombre de Usuario:");
+		lblNewLabel_3.setForeground(new Color(105,105,105));
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_3.setBounds(119, 142, 151, 14);
+		panelCuentas.add(lblNewLabel_3);
+		
+		txtUsuario = new JTextField();
+		txtUsuario.setBounds(290, 142, 183, 20);
+		panelCuentas.add(txtUsuario);
+		txtUsuario.setColumns(10);
+		
+		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
+		lblContrasea.setForeground(SystemColor.controlDkShadow);
+		lblContrasea.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblContrasea.setBounds(119, 237, 151, 14);
+		panelCuentas.add(lblContrasea);
+		
+		txtPass = new JPasswordField();
+		txtPass.setBounds(290, 237, 183, 20);
+		panelCuentas.add(txtPass);
+		
+		JLabel lblRepetirContrasea = new JLabel("Repetir Contrase\u00F1a:");
+		lblRepetirContrasea.setForeground(SystemColor.controlDkShadow);
+		lblRepetirContrasea.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblRepetirContrasea.setBounds(119, 327, 151, 20);
+		panelCuentas.add(lblRepetirContrasea);
+		
+		txtPass2 = new JPasswordField();
+		txtPass2.setBounds(290, 327, 183, 20);
+		panelCuentas.add(txtPass2);
+		
+		JButton btnNewButton_1 = new JButton("Cerrar Sesi\u00F3n");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Login logueo = new Login();
+				logueo.setVisible(true);
+				logueo.setLocationRelativeTo(null);
+				
+			}
+		});
+		btnNewButton_1.setForeground(Color.WHITE);
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnNewButton_1.setBackground(new Color (105,105,105));
+		btnNewButton_1.setBounds(954, 566, 116, 23);
+		panelCuentas.add(btnNewButton_1);
+		
+		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Users user = new Users(comboBoxTipo.getSelectedItem().toString(),txtUsuario.getText(),txtPass.getText());
+			    ControlUsuarios.getInstance().Principal(user);
+			}
+		});
+		btnGuardar.setForeground(Color.WHITE);
+		btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnGuardar.setBackground(new Color (105,105,105));
+		btnGuardar.setBounds(228, 495, 116, 23);
+		panelCuentas.add(btnGuardar);
+		
+		JLabel lblTipoDeCuenta = new JLabel("Tipo de Cuenta: ");
+		lblTipoDeCuenta.setForeground(SystemColor.controlDkShadow);
+		lblTipoDeCuenta.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTipoDeCuenta.setBounds(119, 413, 151, 20);
+		panelCuentas.add(lblTipoDeCuenta);
+		
+		comboBoxTipo = new JComboBox();
+		comboBoxTipo.setBackground(new Color(105,105,105));
+		comboBoxTipo.setForeground(Color.WHITE);
+		comboBoxTipo.setFont(new Font("Tahoma", Font.BOLD, 12));
+		comboBoxTipo.setModel(new DefaultComboBoxModel(new String[] {"          <Seleccionar>", "             Profesor", "             Estudiante"}));
+		comboBoxTipo.setSelectedIndex(0);
+		comboBoxTipo.setBounds(290, 415, 183, 20);
+		panelCuentas.add(comboBoxTipo);
+		
+		JLabel lblNewLabel_8 = new JLabel("");
+		lblNewLabel_8.setIcon(new ImageIcon("C:\\Users\\PASCASIO\\Downloads\\user (4).png"));
+		lblNewLabel_8.setBounds(79, 130, 37, 43);
+		panelCuentas.add(lblNewLabel_8);
+		
+		JLabel lblNewLabel_9 = new JLabel("");
+		lblNewLabel_9.setIcon(new ImageIcon("C:\\Users\\PASCASIO\\Downloads\\repeat.png"));
+		lblNewLabel_9.setBounds(79, 325, 37, 32);
+		panelCuentas.add(lblNewLabel_9);
+		
+		JLabel lblNewLabel_10 = new JLabel("");
+		lblNewLabel_10.setIcon(new ImageIcon("C:\\Users\\PASCASIO\\Downloads\\house-key (1).png"));
+		lblNewLabel_10.setBounds(79, 225, 37, 32);
+		panelCuentas.add(lblNewLabel_10);
+		
+		JLabel lblNewLabel_7 = new JLabel("");
+		lblNewLabel_7.setBounds(688, 128, 264, 273);
+		panelCuentas.add(lblNewLabel_7);
+		lblNewLabel_7.setBackground(Color.DARK_GRAY);
+		lblNewLabel_7.setIcon(new ImageIcon(Principal.class.getResource("/resources/3d (6).png")));
 		
 		JPanel panelMenu = new JPanel();
 		panelMenu.setBorder(null);
@@ -899,7 +1009,20 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_1.setForeground(Color.WHITE);
 		
 		JMenuItem mntmRegistrar = new JMenuItem(" REGISTRAR");
-		mntmRegistrar.addMouseListener(new MouseAdapter() {
+		mntmRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				pnlContenido.removeAll();
+				pnlContenido.add(panelRegistrar);
+				pnlContenido.repaint();
+				pnlContenido.revalidate();
+				pnlTitulo.removeAll();
+				pnlTitulo.add(pnlRegistrar);
+				pnlTitulo.repaint();
+				pnlTitulo.revalidate();
+				
+			}
+		});
+		/*mntmRegistrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				pnlContenido.removeAll();
@@ -913,7 +1036,7 @@ public class Principal extends JFrame {
 				
 			}
 			
-		});
+		});*/
 		
 	
 		mntmRegistrar.setIcon(new ImageIcon(Principal.class.getResource("/resources/folder (2).png")));
@@ -951,7 +1074,19 @@ public class Principal extends JFrame {
 		panelMenu.add(mntmGeometria);
 		
 		JMenuItem mntmCuentas = new JMenuItem("CUENTAS");
-		mntmCuentas.addMouseListener(new MouseAdapter() {
+		mntmCuentas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pnlContenido.removeAll();
+				pnlContenido.add(panelCuentas);
+				pnlContenido.repaint();
+				pnlContenido.revalidate();
+				pnlTitulo.removeAll();
+				pnlTitulo.add(pnlCuentas);
+				pnlTitulo.repaint();
+				pnlTitulo.revalidate();
+			}
+		});
+	/*	mntmCuentas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				pnlContenido.removeAll();
@@ -964,7 +1099,8 @@ public class Principal extends JFrame {
 				pnlTitulo.revalidate();
 			}
 		
-		});
+		}); */
+		
 		mntmCuentas.setIcon(new ImageIcon(Principal.class.getResource("/resources/user.png")));
 		mntmCuentas.setHorizontalAlignment(SwingConstants.LEFT);
 		mntmCuentas.setForeground(Color.WHITE);
