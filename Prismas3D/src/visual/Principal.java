@@ -11,7 +11,6 @@ import logic.Rectangular;
 import logic.Romboidal;
 import logic.Trapezoidal;
 import logic.Triangular;
-import logic.ControlUsuarios;
 import logic.Users;
 
 import java.awt.EventQueue;
@@ -91,6 +90,8 @@ public class Principal extends JFrame {
 	private JPasswordField txtPass;
 	private JPasswordField txtPass2;
 	private JComboBox comboBoxTipo;
+	public JMenuItem mntmRegistrar;
+	public JMenuItem mntmCuentas;
 	
 
 	/**
@@ -889,8 +890,7 @@ public class Principal extends JFrame {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Users user = new Users(comboBoxTipo.getSelectedItem().toString(),txtUsuario.getText(),txtPass.getText());
-			    ControlUsuarios.getInstance().Principal(user);
+				
 			}
 		});
 		btnGuardar.setForeground(Color.WHITE);
@@ -1008,7 +1008,7 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_1.setHorizontalAlignment(SwingConstants.LEFT);
 		mntmNewMenuItem_1.setForeground(Color.WHITE);
 		
-		JMenuItem mntmRegistrar = new JMenuItem(" REGISTRAR");
+		mntmRegistrar = new JMenuItem(" REGISTRAR");
 		mntmRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				pnlContenido.removeAll();
@@ -1073,7 +1073,7 @@ public class Principal extends JFrame {
 		mntmGeometria.setBounds(40, 480, 156, 45);
 		panelMenu.add(mntmGeometria);
 		
-		JMenuItem mntmCuentas = new JMenuItem("CUENTAS");
+		mntmCuentas = new JMenuItem("CUENTAS");
 		mntmCuentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pnlContenido.removeAll();

@@ -16,18 +16,22 @@ import javax.swing.JPasswordField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.MatteBorder;
 
-import logic.ControlUsuarios;
+import logic.Centro;
+import logic.Users;
 
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Login extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtUser;
 	private JPasswordField txtPassw;
+	private JLabel lblLogin;
 
 	/**
 	 * Launch the application.
@@ -53,6 +57,8 @@ public class Login extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
+		Centro.getInstance().addUser(new Users("Estudiante","Jrosario","123456"));
+		
 		JPanel panel = new JPanel();
 		panel.setBorder(new MatteBorder(3, 3, 3, 3, (Color) SystemColor.control));
 		panel.setBackground(new Color(105,105,105));
@@ -76,34 +82,52 @@ public class Login extends JDialog {
 		panel_1.add(lblUserLogin);
 		
 		txtUser = new JTextField();
+		txtUser.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblLogin.setVisible(false);
+			}
+		});
 		txtUser.setFont(new Font("Tahoma", Font.BOLD, 11));
 		txtUser.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUser.setBackground(SystemColor.control);
 		txtUser.setBorder(new MatteBorder(1, 1, 1, 1, (Color) SystemColor.control));
-		txtUser.setBounds(134, 131, 210, 22);
+		txtUser.setBounds(134, 113, 210, 22);
 		panel_1.add(txtUser);
 		txtUser.setColumns(10);
 		
 		txtPassw = new JPasswordField();
+		txtPassw.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblLogin.setVisible(false);
+			}
+		});
 		txtPassw.setFont(new Font("Tahoma", Font.BOLD, 11));
 		txtPassw.setHorizontalAlignment(SwingConstants.CENTER);
 		txtPassw.setBackground(SystemColor.control);
 		txtPassw.setBorder(new MatteBorder(1, 1, 1, 1, (Color) SystemColor.control));
 		txtPassw.setSelectionColor(Color.WHITE);
 		txtPassw.setEchoChar('*');
-		txtPassw.setBounds(134, 203, 210, 22);
+		txtPassw.setBounds(134, 193, 210, 22);
 		panel_1.add(txtPassw);
 		
 		JButton btnNewButton = new JButton("ENTRAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(ControlUsuarios.getInstance().confirmLogin(txtUser.getText(),txtPassw.getText())){
+				if(Centro.getInstance().login(txtUser.getText(), txtPassw.getText())){
 					Principal frame = new Principal();
+					if(Centro.getLoginUser().getTipo().equals("Estudiante")) {
+						frame.mntmRegistrar.setEnabled(false);
+						frame.mntmCuentas.setEnabled(false);
+					}
 					dispose();
 					frame.setVisible(true);
-				};
-				
-				
+				}else {
+					
+					lblLogin.setVisible(true);
+					txtPassw.setText("");
+				}
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -128,13 +152,20 @@ public class Login extends JDialog {
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(Login.class.getResource("/resources/user (3).png")));
-		lblNewLabel_2.setBounds(78, 120, 46, 42);
+		lblNewLabel_2.setBounds(78, 103, 46, 42);
 		panel_1.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setIcon(new ImageIcon(Login.class.getResource("/resources/house-key.png")));
-		lblNewLabel_3.setBounds(78, 195, 46, 42);
+		lblNewLabel_3.setBounds(78, 183, 46, 42);
 		panel_1.add(lblNewLabel_3);
+		
+		lblLogin = new JLabel("<html><p>COMBINACION DE USUARIO Y CONTRASE\u00D1A INVALIDA O NO ENCONTRADA</p><html>");
+		lblLogin.setVisible(false);
+		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblLogin.setBounds(90, 226, 269, 50);
+		lblLogin.setForeground(Color.decode("#D8000C"));
+		panel_1.add(lblLogin);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(Login.class.getResource("/resources/3d (6).png")));
