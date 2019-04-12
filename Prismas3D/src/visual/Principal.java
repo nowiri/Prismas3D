@@ -7,11 +7,14 @@ import javafx.scene.image.*;
 import javafx.scene.paint.*;
 import logic.Centro;
 import logic.Cuadrangular;
+import logic.Prisma;
 import logic.Rectangular;
 import logic.Romboidal;
+import logic.StdDraw3D;
 import logic.Trapezoidal;
 import logic.Triangular;
 import logic.Users;
+import logic.StdDraw3D.Shape;
 
 import java.awt.EventQueue;
 
@@ -21,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.awt.Window.Type;
 import java.awt.Frame;
+import java.awt.Panel;
 import java.awt.Cursor;
 import java.awt.ComponentOrientation;
 import java.awt.Dialog.ModalExclusionType;
@@ -50,6 +54,13 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
@@ -60,8 +71,15 @@ import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+import javax.swing.JInternalFrame;
 
-public class Principal extends JFrame {
+
+public class Principal extends JFrame implements Runnable{
 	private JPanel pnlContenido;
 	private JPanel panelGeometría;
     private JPanel panelGraficar;
@@ -92,6 +110,21 @@ public class Principal extends JFrame {
 	private JComboBox comboBoxTipo;
 	public JMenuItem mntmRegistrar;
 	public JMenuItem mntmCuentas;
+	private JTextField txtDNombre;
+	private JTextField txtDBase;
+	private JTextField txtDAltura;
+	private JTextField txtDAreal;
+	private JTextField txtAreab;
+	private JTextField txtAreat;
+	private JTextField txtDVolumen;
+	private JComboBox cbxSelectPrism;
+	private Thread h1;
+	int hora, minutos, segundos;
+    private Calendar calendario;
+    private JLabel lblHora;
+    private DefaultPieDataset data = new DefaultPieDataset();
+    public final static JLabel lblGraf = new JLabel("New label");;
+    private static int contador=-1;
 	
 
 	/**
@@ -102,6 +135,7 @@ public class Principal extends JFrame {
 			public void run() {
 				try {
 					Principal frame = new Principal();
+			        cargarGraf();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -114,6 +148,8 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		StdDraw3D.setBackground(StdDraw3D.GRAY);
+        StdDraw3D.setInfoDisplay(false);
 		setResizable(false);
 		setBounds(new Rectangle(0, 0, 2147483647, 2147483647));
 		setMaximizedBounds(new Rectangle(0, 0, 2147483647, 2147483647));
@@ -146,6 +182,90 @@ public class Principal extends JFrame {
 		panelPrincipal.setBackground(Color.WHITE);
 		pnlContenido.add(panelPrincipal, "name_81812329842485");
 		panelPrincipal.setLayout(null);
+		
+		JLabel lblBienvenido = new JLabel("\u00A1Bienvenido!");
+		lblBienvenido.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblBienvenido.setBounds(169, 104, 120, 14);
+		panelPrincipal.add(lblBienvenido);
+		
+		try{
+			JLabel lblUsuarioLogin = new JLabel(Centro.getLoginUser().getUserName());
+			lblUsuarioLogin.setFont(new Font("Tahoma", Font.BOLD, 17));
+			lblUsuarioLogin.setBounds(227, 411, 139, 14);
+			panelPrincipal.add(lblUsuarioLogin);
+		}catch(Exception e) {
+			
+		}
+		
+		lblHora = new JLabel("HORA");
+		lblHora.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblHora.setBounds(187, 436, 85, 14);
+		panelPrincipal.add(lblHora);
+				
+		JButton button = new JButton("Cerrar Sesi\u00F3n");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Login logueo = new Login();
+				logueo.setVisible(true);
+				logueo.setLocationRelativeTo(null);
+			}
+		});
+		button.setForeground(Color.WHITE);
+		button.setFont(new Font("Tahoma", Font.BOLD, 12));
+		button.setBackground(SystemColor.controlDkShadow);
+		button.setBounds(152, 461, 154, 23);
+		panelPrincipal.add(button);
+		
+		JLabel lblTipo = new JLabel("New label");
+		
+		lblTipo.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblTipo.setBounds(107, 411, 120, 14);
+		try {
+			lblTipo.setText(Centro.getLoginUser().getTipo()+":");
+		}catch(Exception e){
+			
+		}
+
+		panelPrincipal.add(lblTipo);
+		
+		JLabel lblImagen = new JLabel("New label");
+		try {
+			if(Centro.getLoginUser().getTipo().equals("Profesor")) {
+				lblImagen.setIcon(new ImageIcon(Principal.class.getResource("/resources/teacher (1).png")));
+			}else {
+				lblImagen.setIcon(new ImageIcon(Principal.class.getResource("/resources/study.png")));
+			}
+		}catch(Exception e){
+			
+		}
+		lblImagen.setBounds(97, 144, 265, 256);
+		panelPrincipal.add(lblImagen);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBackground(Color.WHITE);
+		panel_2.setBounds(384, 11, 709, 592);
+		panelPrincipal.add(panel_2);
+		panel_2.setLayout(null);
+		
+	//	lblGraf = new JLabel("New label");
+		lblGraf.setBounds(10, 11, 689, 570);
+		panel_2.add(lblGraf);
+		
+		
+		data.setValue("C", 40);
+        data.setValue("Java", 45);
+        data.setValue("Python", 15);
+		JFreeChart chart = ChartFactory.createPieChart(
+		         "Ejemplo Rapido de Grafico en un ChartFrame", 
+		         data, 
+		         true, 
+		         true, 
+		         false);
+		
+		h1 = new Thread(this);
+	    h1.start();
 		
 		panelRegistrar = new JPanel();
 		panelRegistrar.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.LIGHT_GRAY));
@@ -213,7 +333,7 @@ public class Principal extends JFrame {
 		
 		final JSpinner spnr_ladoCuad = new JSpinner();
 		spnr_ladoCuad.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		spnr_ladoCuad.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_ladoCuad.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
 		spnr_ladoCuad.setBounds(506, 70, 46, 27);
 		panelCuadrado.add(spnr_ladoCuad);
 		
@@ -269,7 +389,7 @@ public class Principal extends JFrame {
 		
 		final JSpinner spnr_ladoArect = new JSpinner();
 		spnr_ladoArect.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		spnr_ladoArect.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_ladoArect.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
 		spnr_ladoArect.setBounds(506, 70, 46, 27);
 		panelRect.add(spnr_ladoArect);
 		
@@ -280,7 +400,7 @@ public class Principal extends JFrame {
 		
 		final JSpinner spnr_ladoBrect = new JSpinner();
 		spnr_ladoBrect.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		spnr_ladoBrect.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_ladoBrect.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
 		spnr_ladoBrect.setBounds(506, 113, 46, 27);
 		panelRect.add(spnr_ladoBrect);
 		
@@ -337,7 +457,7 @@ public class Principal extends JFrame {
 		final JSpinner spnr_Drombo = new JSpinner();
 		spnr_Drombo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		spnr_Drombo.setBounds(506, 70, 46, 27);
-		spnr_Drombo.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_Drombo.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
 		panelRombo.add(spnr_Drombo);
 		
 		JLabel lblBaseB_1 = new JLabel("Base d:");
@@ -348,7 +468,7 @@ public class Principal extends JFrame {
 		final JSpinner spnr_drombo = new JSpinner();
 		spnr_drombo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		spnr_drombo.setBounds(506, 113, 46, 27);
-		spnr_drombo.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_drombo.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
 		panelRombo.add(spnr_drombo);
 		
 		JSeparator separator_5 = new JSeparator();
@@ -410,7 +530,7 @@ public class Principal extends JFrame {
 		
 		final JSpinner spnr_Btrap = new JSpinner();
 		spnr_Btrap.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		spnr_Btrap.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_Btrap.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
 		spnr_Btrap.setBounds(506, 70, 46, 27);
 		panelTrap.add(spnr_Btrap);
 		
@@ -443,7 +563,7 @@ public class Principal extends JFrame {
 		
 		final JSpinner spnr_btrap = new JSpinner();
 		spnr_btrap.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		spnr_btrap.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_btrap.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
 		spnr_btrap.setBounds(506, 113, 46, 27);
 		panelTrap.add(spnr_btrap);
 		
@@ -499,7 +619,7 @@ public class Principal extends JFrame {
 		
 		final JSpinner spnr_basetrian = new JSpinner();
 		spnr_basetrian.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		spnr_basetrian.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		spnr_basetrian.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
 		spnr_basetrian.setBounds(506, 70, 46, 27);
 		panelTriang.add(spnr_basetrian);
 		
@@ -651,7 +771,7 @@ public class Principal extends JFrame {
 		 label_27.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		 
 		 txtRNombre = new JTextField();
-		 txtRNombre.setText("Mi_prisma");
+		 txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.misPrismas.size()));
 		 txtRNombre.setBounds(161, 108, 184, 20);
 		 panelRegistrar.add(txtRNombre);
 		 txtRNombre.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -666,7 +786,7 @@ public class Principal extends JFrame {
 		 spnrRAltura.setForeground(Color.DARK_GRAY);
 		 spnrRAltura.setBounds(657, 108, 210, 20);
 		 panelRegistrar.add(spnrRAltura);
-		 spnrRAltura.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+		 spnrRAltura.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
 		 spnrRAltura.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		 
 		 JButton btnNewButton = new JButton("Guardar");
@@ -700,10 +820,11 @@ public class Principal extends JFrame {
 		 				Cuadrangular aux = new Cuadrangular(altura,x1,y1,lado,nombre);
 			 			Centro.getInstance().addPrisma(aux);
 			 			JOptionPane.showMessageDialog(null, "Se ha creado el prisma cuadrangular con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
-			 			spnrRAltura.setValue(0);
+			 			spnrRAltura.setValue(1);
 			 			spnr_x1cuad.setValue(0);
 			 			spnr_y1cuad.setValue(0);
-			 			spnr_ladoCuad.setValue(0);			
+			 			spnr_ladoCuad.setValue(1);
+			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.misPrismas.size()));
 		 			}catch(Exception e1) {
 		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
 		 			}
@@ -720,11 +841,12 @@ public class Principal extends JFrame {
 			 			Rectangular aux = new Rectangular(altura,x1,y1,ladoA,ladoB,nombre);
 			 			Centro.getInstance().addPrisma(aux);
 			 			JOptionPane.showMessageDialog(null, "Se ha creado el prisma rectangular con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
-			 			spnrRAltura.setValue(0);
+			 			spnrRAltura.setValue(1);
 			 			spnr_x1rect.setValue(0);
 			 			spnr_y1rect.setValue(0);
-			 			spnr_ladoArect.setValue(0);
-			 			spnr_ladoBrect.setValue(0);
+			 			spnr_ladoArect.setValue(1);
+			 			spnr_ladoBrect.setValue(1);
+			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.misPrismas.size()));
 		 			}catch(Exception e1) {
 		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
 		 			}
@@ -741,11 +863,12 @@ public class Principal extends JFrame {
 			 			Romboidal aux = new Romboidal(altura,x1,y1,D,d,nombre);
 			 			Centro.getInstance().addPrisma(aux);
 			 			JOptionPane.showMessageDialog(null, "Se ha creado el prisma romboidal con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
-			 			spnrRAltura.setValue(0);
+			 			spnrRAltura.setValue(1);
 			 			spnr_x1rombo.setValue(0);
 			 			spnr_y1rombo.setValue(0);
-			 			spnr_Drombo.setValue(0);
-			 			spnr_drombo.setValue(0);
+			 			spnr_Drombo.setValue(1);
+			 			spnr_drombo.setValue(1);
+			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.misPrismas.size()));
 		 			}catch(Exception e1) {
 		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
 		 			}
@@ -764,13 +887,14 @@ public class Principal extends JFrame {
 			 			Trapezoidal aux = new Trapezoidal(altura,x1,y1,x2,y2,B,b,nombre);
 			 			Centro.getInstance().addPrisma(aux);
 			 			JOptionPane.showMessageDialog(null, "Se ha creado el prisma trapezoidal con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
-			 			spnrRAltura.setValue(0);
+			 			spnrRAltura.setValue(1);
 			 			spnr_x1trap.setValue(0);
 			 			spnr_y1trap.setValue(0);
 			 			spnr_x2trap.setValue(0);
 			 			spnr_y2trap.setValue(0);
-			 			spnr_Btrap.setValue(0);
-			 			spnr_btrap.setValue(0);
+			 			spnr_Btrap.setValue(1);
+			 			spnr_btrap.setValue(1);
+			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.misPrismas.size()));
 		 			}catch(Exception e1) {
 		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
 		 			}
@@ -788,19 +912,20 @@ public class Principal extends JFrame {
 			 			Triangular aux = new Triangular(altura,x1,y1,x2,y2,base,nombre);
 			 			Centro.getInstance().addPrisma(aux);
 			 			JOptionPane.showMessageDialog(null, "Se ha creado el prisma triangular con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
-			 			spnrRAltura.setValue(0);
+			 			spnrRAltura.setValue(1);
 			 			spnr_x1trian.setValue(0);
 			 			spnr_y1trian.setValue(0);
 			 			spnr_x2trian.setValue(0);
 			 			spnr_y2trian.setValue(0);
-			 			spnr_basetrian.setValue(0);
+			 			spnr_basetrian.setValue(1);
+			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.misPrismas.size()));
 		 			}catch(Exception e1) {
 		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
 		 			}
 		 			
 		 			break;
 		 		}
-		 		
+		 		cargarGraf();
 		 	}
 		 });
 		 btnNewButton.setBounds(778, 580, 89, 23);
@@ -812,9 +937,233 @@ public class Principal extends JFrame {
 		pnlContenido.add(panelGraficar, "name_81819637267776");
 		panelGraficar.setLayout(null);
 		
-		JLabel lblNewLabel_4 = new JLabel("GRAFICAR");
-		lblNewLabel_4.setBounds(0, 0, 132, 14);
-		panelGraficar.add(lblNewLabel_4);
+		JPanel panelBorde = new JPanel();
+		panelBorde.setBackground(Color.WHITE);
+		panelBorde.setForeground(Color.BLUE);
+		panelBorde.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "GR\u00C1FICA", TitledBorder.CENTER, TitledBorder.TOP, null, Color.BLACK));
+		panelBorde.setBounds(561, 11, 532, 592);
+		panelGraficar.add(panelBorde);
+		panelBorde.setLayout(null);
+		
+		Panel panelCanvas = StdDraw3D.canvasPanel;
+		panelCanvas.setBounds(10, 21, 512, 560);
+		panelBorde.add(panelCanvas);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBorder(new TitledBorder(null, "DATOS DEL PRISMA", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(64, 145, 432, 422);
+		panelGraficar.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel lblNombre = new JLabel("NOMBRE:");
+		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNombre.setBounds(32, 40, 75, 14);
+		panel_1.add(lblNombre);
+		
+		JLabel lblBase = new JLabel("BASE:");
+		lblBase.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblBase.setBounds(32, 94, 58, 14);
+		panel_1.add(lblBase);
+		
+		JLabel lblAltura = new JLabel("ALTURA:");
+		lblAltura.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblAltura.setBounds(32, 148, 75, 14);
+		panel_1.add(lblAltura);
+		
+		JLabel lblAreaLateral = new JLabel("AREA LATERAL:");
+		lblAreaLateral.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblAreaLateral.setBounds(32, 202, 102, 14);
+		panel_1.add(lblAreaLateral);
+		
+		JLabel lblAreaTotal = new JLabel("AREA TOTAL:");
+		lblAreaTotal.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblAreaTotal.setBounds(32, 310, 102, 14);
+		panel_1.add(lblAreaTotal);
+		
+		JLabel lblAreaDeLa = new JLabel("AREA BASE:");
+		lblAreaDeLa.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblAreaDeLa.setBounds(32, 256, 102, 14);
+		panel_1.add(lblAreaDeLa);
+		
+		JLabel lblVo = new JLabel("VOLUMEN:");
+		lblVo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblVo.setBounds(32, 364, 86, 14);
+		panel_1.add(lblVo);
+		
+		txtDNombre = new JTextField();
+		txtDNombre.setBackground(Color.WHITE);
+		txtDNombre.setEditable(false);
+		txtDNombre.setBounds(161, 37, 231, 20);
+		panel_1.add(txtDNombre);
+		txtDNombre.setColumns(10);
+		
+		txtDBase = new JTextField();
+		txtDBase.setBackground(Color.WHITE);
+		txtDBase.setEditable(false);
+		txtDBase.setColumns(10);
+		txtDBase.setBounds(161, 91, 231, 20);
+		panel_1.add(txtDBase);
+		
+		txtDAltura = new JTextField();
+		txtDAltura.setBackground(Color.WHITE);
+		txtDAltura.setForeground(Color.BLACK);
+		txtDAltura.setEditable(false);
+		txtDAltura.setColumns(10);
+		txtDAltura.setBounds(161, 145, 231, 20);
+		panel_1.add(txtDAltura);
+		
+		txtDAreal = new JTextField();
+		txtDAreal.setBackground(Color.WHITE);
+		txtDAreal.setForeground(Color.BLACK);
+		txtDAreal.setEditable(false);
+		txtDAreal.setColumns(10);
+		txtDAreal.setBounds(161, 199, 231, 20);
+		panel_1.add(txtDAreal);
+		
+		txtAreab = new JTextField();
+		txtAreab.setBackground(Color.WHITE);
+		txtAreab.setForeground(Color.BLACK);
+		txtAreab.setEditable(false);
+		txtAreab.setColumns(10);
+		txtAreab.setBounds(161, 253, 231, 20);
+		panel_1.add(txtAreab);
+		
+		txtAreat = new JTextField();
+		txtAreat.setBackground(Color.WHITE);
+		txtAreat.setForeground(Color.BLACK);
+		txtAreat.setEditable(false);
+		txtAreat.setColumns(10);
+		txtAreat.setBounds(161, 307, 231, 20);
+		panel_1.add(txtAreat);
+		
+		txtDVolumen = new JTextField();
+		txtDVolumen.setBackground(Color.WHITE);
+		txtDVolumen.setForeground(Color.BLACK);
+		txtDVolumen.setEditable(false);
+		txtDVolumen.setColumns(10);
+		txtDVolumen.setBounds(161, 361, 231, 20);
+		panel_1.add(txtDVolumen);
+		
+		cbxSelectPrism = new JComboBox();
+		cbxSelectPrism.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = cbxSelectPrism.getSelectedIndex();
+				System.out.println(index);
+				if(index>0) {
+					Prisma prisma = Centro.misPrismas.get(index-1);
+					txtDNombre.setText(prisma.getNombre());
+					txtDBase.setText(prisma.getfiguraBase());
+					txtDAltura.setText(Float.toString(prisma.getAltura()));
+					txtDAreal.setText(Float.toString(prisma.areaLateral()));
+					txtAreab.setText(Float.toString(prisma.areaBase()));
+					txtAreat.setText(Float.toString(prisma.areaTotal()));
+					txtDVolumen.setText(Float.toString(prisma.volumen()));
+					
+					if(prisma instanceof Cuadrangular) {
+						constCuadrangular(((Cuadrangular) prisma).getX1(),((Cuadrangular) prisma).getY1(),((Cuadrangular) prisma).getLado(),prisma.getAltura());
+					}
+					if(prisma instanceof Rectangular) {
+						
+					}
+					if(prisma instanceof Romboidal) {
+						
+					}
+					if(prisma instanceof Trapezoidal) {
+						
+					}
+					if(prisma instanceof Triangular) {
+						
+					}
+				}else {
+					txtDNombre.setText("");
+					txtDBase.setText("");
+					txtDAltura.setText("");
+					txtDAreal.setText("");
+					txtAreab.setText("");
+					txtAreat.setText("");
+					txtDVolumen.setText("");
+					seleccione();
+				}
+			}
+
+			private void seleccione() {
+				StdDraw3D.clearOverlay();
+				StdDraw3D.clear();
+				StdDraw3D.setCameraOrientation(0, 0, 0);
+		        StdDraw3D.setScale(-1, 1);
+		        StdDraw3D.setInfoDisplay(false);
+		        StdDraw3D.setPenColor(StdDraw3D.BLUE);
+		        StdDraw3D.setFont(new Font("Arial", Font.BOLD, 16));
+		        StdDraw3D.Shape text = StdDraw3D.text3D(0, 0, 0, "Seleccione");
+		        text.scale(3.5);
+		        text.move(-0.7, -0.1, 0);
+		        text = StdDraw3D.combine(text);
+		        StdDraw3D.camera().lookAt(text.getPosition());
+		        StdDraw3D.show();
+			}
+
+			private void constCuadrangular(float x1, float y1, float dist, float alt) {
+				StdDraw3D.clearOverlay();
+				StdDraw3D.clear();
+				StdDraw3D.setCameraOrientation(0, 0, 0);
+		        
+		        double x2,x3,x4;
+		        double y2,y3, y4;
+		        
+		        x2 = x1;
+		        y2 = y1 - dist;
+		        x3 = x2 + dist;
+		        x4 = x1 + dist;
+		        y3 = y2;
+		        y4 = y1; 
+
+		        StdDraw3D.setBackground(StdDraw3D.GRAY);
+		        StdDraw3D.setInfoDisplay(false);
+		        StdDraw3D.Camera cam = StdDraw3D.camera();
+		        if(alt>dist) {
+		        	StdDraw3D.setScale(-alt,alt);
+		        }else {
+		            StdDraw3D.setScale(-dist,dist);
+		        }
+		        double xb1[] = new double[]{x1,x2,x3,x4};
+		        double yb1[] = new double[]{y1,y2,y3,y4};
+		        double zb1[] = new double[]{0,0,0,0};
+		        Shape base1 = StdDraw3D.polygon(xb1,yb1,zb1);
+		        double xb2[] = new double[]{x1,x2,x3,x4};
+		        double yb2[] = new double[]{y1,y2,y3,y4};
+		        double zb2[] = new double[]{alt,alt,alt,alt};
+		        Shape base2 = StdDraw3D.polygon(xb2,yb2,zb2);
+		        double xl1[] = new double[]{x1,x2,x2,x1};
+		        double yl1[] = new double[]{y1,y2,y2,y1};
+		        double zl1[] = new double[]{0,0,alt,alt};
+		        Shape lado1 = StdDraw3D.polygon(xl1,yl1,zl1);
+		        double xl2[] = new double[]{x2,x3,x3,x2};
+		        double yl2[] = new double[]{y2,y3,y3,y2};
+		        double zl2[] = new double[]{0,0,alt,alt};
+		        Shape lado2 = StdDraw3D.polygon(xl2,yl2,zl2);
+		        double xl3[] = new double[]{x3,x4,x4,x3};
+		        double yl3[] = new double[]{y3,y4,y4,y3};
+		        double zl3[] = new double[]{0,0,alt,alt};
+		        Shape lado3 = StdDraw3D.polygon(xl3,yl3,zl3);
+		        double xl4[] = new double[]{x4,x1,x1,x4};
+		        double yl4[] = new double[]{y4,y1,y1,y4};
+		        double zl4[] = new double[]{0,0,alt,alt};
+		        Shape lado4 = StdDraw3D.polygon(xl4,yl4,zl4);
+		        StdDraw3D.setOrbitCenter((x3-(dist/2)),y4-(dist/2),alt/2);
+		        cam.setPosition((x3-(dist/2)),y4-(dist/2),alt+3);
+		        StdDraw3D.show();
+				
+			}
+		});
+		cbxSelectPrism.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
+		cbxSelectPrism.setBounds(242, 84, 243, 20);
+		panelGraficar.add(cbxSelectPrism);
+		
+		JLabel lblSeleccioneElPrisma = new JLabel("PRISMA A GRAFICAR:");
+		lblSeleccioneElPrisma.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblSeleccioneElPrisma.setBounds(64, 86, 168, 14);
+		panelGraficar.add(lblSeleccioneElPrisma);
 		
 		panelGeometría = new JPanel();
 		panelGeometría.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.LIGHT_GRAY));
@@ -942,8 +1291,8 @@ public class Principal extends JFrame {
 		contentPane.add(panelMenu);
 		panelMenu.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Bienvenido");
-		lblNewLabel.addMouseListener(new MouseAdapter() {
+		JLabel lblMenu = new JLabel("MEN\u00DA");
+		lblMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				pnlContenido.removeAll();
@@ -954,7 +1303,9 @@ public class Principal extends JFrame {
 				pnlTitulo.add(pnlHome);
 				pnlTitulo.repaint();
 				pnlTitulo.revalidate();
+				//cargarGraf();
 			}
+			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				pnlContenido.removeAll();
@@ -967,12 +1318,12 @@ public class Principal extends JFrame {
 				pnlTitulo.revalidate();
 			}
 		});
-		lblNewLabel.setBackground(Color.WHITE);
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(40, 210, 145, 39);
-		panelMenu.add(lblNewLabel);
+		lblMenu.setBackground(Color.WHITE);
+		lblMenu.setForeground(Color.WHITE);
+		lblMenu.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblMenu.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMenu.setBounds(40, 210, 145, 39);
+		panelMenu.add(lblMenu);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("  GRAFICAR");
 		mntmNewMenuItem_1.addMouseListener(new MouseAdapter() {
@@ -986,14 +1337,19 @@ public class Principal extends JFrame {
 				pnlTitulo.add(pnlGraficar);
 				pnlTitulo.repaint();
 				pnlTitulo.revalidate();
-				
+				cbxSelectPrism.removeAllItems();
+				cbxSelectPrism.insertItemAt(new String("<Seleccione>"), 0);
+				cbxSelectPrism.setSelectedIndex(0);
+				for(Prisma prisma: Centro.getInstance().misPrismas) {
+					cbxSelectPrism.addItem(prisma.getNombre()+": "+prisma.getfiguraBase());
+				}
 				
 			}
 			
 		
 		});
 		mntmNewMenuItem_1.setIcon(new ImageIcon(Principal.class.getResource("/resources/modeling (8).png")));
-		mntmNewMenuItem_1.setBounds(40, 380, 156, 45);
+		mntmNewMenuItem_1.setBounds(34, 380, 156, 45);
 		panelMenu.add(mntmNewMenuItem_1);
 		mntmNewMenuItem_1.setBackground(new Color(105,105,105));
 	//	mntmNewMenuItem_1.addActionListener(new ActionListener() {
@@ -1045,7 +1401,7 @@ public class Principal extends JFrame {
 		mntmRegistrar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		mntmRegistrar.setBorder(null);
 		mntmRegistrar.setBackground(new Color(105,105,105));
-		mntmRegistrar.setBounds(40, 280, 156, 45);
+		mntmRegistrar.setBounds(34, 280, 156, 45);
 		panelMenu.add(mntmRegistrar);
 		
 		JMenuItem mntmGeometria = new JMenuItem("GEOMETRIA");
@@ -1070,7 +1426,7 @@ public class Principal extends JFrame {
 		mntmGeometria.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		mntmGeometria.setBorder(null);
 		mntmGeometria.setBackground(new Color(105,105,105));
-		mntmGeometria.setBounds(40, 480, 156, 45);
+		mntmGeometria.setBounds(34, 480, 156, 45);
 		panelMenu.add(mntmGeometria);
 		
 		mntmCuentas = new JMenuItem("CUENTAS");
@@ -1107,11 +1463,11 @@ public class Principal extends JFrame {
 		mntmCuentas.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		mntmCuentas.setBorder(null);
 		mntmCuentas.setBackground(new Color(105,105,105));
-		mntmCuentas.setBounds(40, 580, 156, 45);
+		mntmCuentas.setBounds(34, 580, 156, 45);
 		panelMenu.add(mntmCuentas);
 		
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.addMouseListener(new MouseAdapter() {
+		JLabel lblIconoBienvenida = new JLabel("");
+		lblIconoBienvenida.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				pnlContenido.removeAll();
@@ -1135,10 +1491,10 @@ public class Principal extends JFrame {
 				pnlTitulo.revalidate();
 			}
 		});
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setIcon(new ImageIcon(Principal.class.getResource("/resources/cube-design (3).png")));
-		lblNewLabel_2.setBounds(26, 32, 186, 152);
-		panelMenu.add(lblNewLabel_2);
+		lblIconoBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconoBienvenida.setIcon(new ImageIcon(Principal.class.getResource("/resources/cube-design (3).png")));
+		lblIconoBienvenida.setBounds(26, 32, 186, 152);
+		panelMenu.add(lblIconoBienvenida);
 		
 		pnlTitulo = new JPanel();
 		pnlTitulo.setBackground(new Color(0, 151, 167));
@@ -1151,7 +1507,7 @@ public class Principal extends JFrame {
 		pnlHome.setBackground(new Color(0, 151, 167));
 		pnlHome.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("NOMBRE DE LA EMPRESA");
+		JLabel lblNewLabel_1 = new JLabel("PRISMAS 3D");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 28));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setForeground(Color.WHITE);
@@ -1207,9 +1563,74 @@ public class Principal extends JFrame {
 		lblCuentas.setBounds(302, 18, 500, 39);
 		pnlCuentas.add(lblCuentas, "name_81583263617228");
 		
-		
-		
-	
 
+	}
+
+	private void calcula() {
+		Calendar calendario = new GregorianCalendar();
+        hora =calendario.get(Calendar.HOUR_OF_DAY);
+        minutos = calendario.get(Calendar.MINUTE);
+        segundos = calendario.get(Calendar.SECOND);
+	}
+
+	@Override
+	public void run() {
+		Thread ct = Thread.currentThread();
+        while (ct == h1) {
+            calcula();
+            lblHora.setText(hora + ":" + minutos + ":" + segundos);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+        }
+		
+	}
+	
+	public static void cargarGraf() {
+		int cuad=0,rect=0,trap=0,romb=0,trian=0;
+		for(Prisma prisma: Centro.misPrismas) {
+			if(prisma instanceof Cuadrangular) {
+				cuad++;
+			}
+			if(prisma instanceof Rectangular) {
+				rect++;
+				contador++;
+			}
+			if(prisma instanceof Romboidal) {
+				romb++;
+			}
+			if(prisma instanceof Trapezoidal) {
+				trap++;
+			}
+			if(prisma instanceof Triangular) {
+				trian++;
+			}
+		}
+		DefaultPieDataset data = new DefaultPieDataset();
+        data.setValue("Cuadrangular", cuad);
+        data.setValue("Rectangular", rect);
+        data.setValue("Romboidal", romb);
+        data.setValue("Trapezoidal", trap);
+        data.setValue("Triangular", trian);
+        // Creando el Grafico
+        JFreeChart chart = ChartFactory.createPieChart(
+         "PRISMAS CREADOS POR TIPO", 
+         data, 
+         true, 
+         true, 
+         false);
+        try {
+        	Files.deleteIfExists(Paths.get(System.getProperty("user.dir")+"\\grafico"+(Centro.misPrismas.size()-1)+".jpg"));
+        }catch(Exception e) {
+        	System.out.println("File not found");
+        }
+        try {
+			ChartUtilities.saveChartAsJPEG(new File("grafico"+Centro.misPrismas.size()+".jpg"), chart, 689, 570);
+			lblGraf.setIcon(new ImageIcon(System.getProperty("user.dir")+"\\grafico"+Centro.misPrismas.size()+".jpg")); 
+		} catch (IOException e) {
+			System.out.println("Me jodi");
+			e.printStackTrace();
+		}
 	}
 }

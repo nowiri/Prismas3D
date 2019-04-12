@@ -28,6 +28,15 @@ public abstract class Prisma {
 	public void setfiguraBase(String base) {
 		this.figuraBase = base;
 	}
+	
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
 	//metodos poliformicos
 	public float volumen() {

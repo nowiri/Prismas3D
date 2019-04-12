@@ -57,7 +57,7 @@ public class Login extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		Centro.getInstance().addUser(new Users("Estudiante","Jrosario","123456"));
+		Centro.getInstance().addUser(new Users("Profesor","Jrosario","123456"));
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new MatteBorder(3, 3, 3, 3, (Color) SystemColor.control));
@@ -117,6 +117,7 @@ public class Login extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				if(Centro.getInstance().login(txtUser.getText(), txtPassw.getText())){
 					Principal frame = new Principal();
+					Principal.cargarGraf();
 					if(Centro.getLoginUser().getTipo().equals("Estudiante")) {
 						frame.mntmRegistrar.setEnabled(false);
 						frame.mntmCuentas.setEnabled(false);

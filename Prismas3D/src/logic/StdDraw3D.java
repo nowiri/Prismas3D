@@ -94,7 +94,7 @@ KeyListener, ActionListener, ChangeListener, ComponentListener, WindowFocusListe
  
     // GUI Components
     private static JFrame frame;
-    private static Panel canvasPanel;
+    public static Panel canvasPanel;
 	private static JMenuBar menuBar;
     private static JMenu fileMenu, cameraMenu, graphicsMenu;
     private static JMenuItem loadButton, saveButton, save3DButton, quitButton;
@@ -335,9 +335,9 @@ KeyListener, ActionListener, ChangeListener, ComponentListener, WindowFocusListe
          
         setBackground(DEFAULT_BGCOLOR);
          
-        frame.setVisible(true);
-        frame.toFront();
-        frame.setState(Frame.NORMAL);
+    //    frame.setVisible(true);
+    //    frame.toFront();
+    //    frame.setState(Frame.NORMAL);
         initialized = true;
  
     }
