@@ -1,8 +1,16 @@
 package logic;
 import java.io.Serializable;
 
-public abstract class Prisma {
+public abstract class Prisma implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7367310168875670103L;
+	/**
+	 * 
+	 */
+
 	protected float altura;
 	protected String figuraBase;
 	protected String nombre;

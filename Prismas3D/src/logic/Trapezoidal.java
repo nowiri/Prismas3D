@@ -2,6 +2,14 @@ package logic;
 
 public class Trapezoidal extends Prisma {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -727236939983307042L;
+	/**
+	 * 
+	 */
+
 	float x1,y1,x2,y2;
 	float baseMenor, baseMayor,h,lado1,lado2;
 
@@ -16,6 +24,7 @@ public class Trapezoidal extends Prisma {
 		this.baseMenor = baseMenor;
 		this.lado1 = (float)(Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2)));
 		this.lado2 = (float)(Math.sqrt(Math.pow((x2+baseMenor)-(x1+baseMayor),2)+Math.pow(y2-y1,2)));
+		super.figuraBase = "Trapecio";	
 	}
 	
 	

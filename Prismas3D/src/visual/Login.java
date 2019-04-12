@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -25,6 +26,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -40,26 +45,47 @@ public class Login extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
+			
 			Login dialog = new Login();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
+		}catch(Exception e) {
+			
 		}
+		/*if(Centro.firstTime) {
+			Centro.getInstance().addUser(new Users("Profesor","admin","admin"));
+			JOptionPane.showMessageDialog(null, "Gracias por utlizar la herramienta Prismas3D! como es la primera vez que "
+					+ "utliza este \r\nsoftware, el usuario y contraseña por defecto son 'admin'. De parte del equipo\r\n"
+					+ "de del proyecto #1 de Programción 1 de la PUCMM, esperamos que le sea de utlidad.\r\n\r\nFavor asegurese de crear una cuenta para "
+					+ "que esta se elimine automaticamente", "Bienvenido!", JOptionPane.INFORMATION_MESSAGE);
+		}*/
 	}
 
 	/**
 	 * Create the dialog.
 	 */
 	public Login() {
+		try{
+			FileInputStream f = new FileInputStream (System.getProperty("user.dir")+"\\PRINCIPAL.dat");
+			ObjectInputStream oos = new ObjectInputStream(f);
+			Centro.setInstance((Centro)oos.readObject());		    		
+    		f.close(); 
+		}catch(Exception e) {
+			System.out.println("No");
+			Centro.getInstance().addUser(new Users("Profesor","admin","admin"));
+			FileOutputStream f;
+			try {
+				f = new FileOutputStream(System.getProperty("user.dir")+"\\PRINCIPAL.dat");
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 		setBounds(100, 100, 837, 480);
 		getContentPane().setLayout(new BorderLayout());
 		setLocationRelativeTo(null);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
-		Centro.getInstance().addUser(new Users("Profesor","Jrosario","123456"));
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new MatteBorder(3, 3, 3, 3, (Color) SystemColor.control));

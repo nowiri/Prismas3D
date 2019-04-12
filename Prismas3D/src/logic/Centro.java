@@ -6,6 +6,7 @@ import javax.swing.JFileChooser;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,10 +15,24 @@ import java.io.Serializable;
 
 public class Centro implements Serializable {
 	
-	public static ArrayList<Prisma> misPrismas = new ArrayList<>();
-	public static ArrayList<Users> misUsuarios = new ArrayList<>();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5635111080934618090L;
+	/**
+	 * 
+	 */
+
+	private ArrayList<Prisma> misPrismas;
+	private ArrayList<Users> misUsuarios;
 	private static Centro centro;
 	private static Users loginUser;
+	public static boolean firstTime = true;
+	
+	public Centro() {
+		misPrismas = new ArrayList<>();
+		misUsuarios = new ArrayList<>();
+	}
 	
 	public static Centro getInstance() {
 		if(centro == null) {
@@ -28,6 +43,7 @@ public class Centro implements Serializable {
 	}
 	
 	public static void setInstance(Centro cent) {
+		System.out.println("si");
 		centro = cent;
 	}
 	
@@ -40,6 +56,23 @@ public class Centro implements Serializable {
 		Centro.loginUser = loginUser;
 	}
 	
+	
+	public ArrayList<Prisma> getMisPrismas() {
+		return misPrismas;
+	}
+
+	public void setMisPrismas(ArrayList<Prisma> misPrisma) {
+		this.misPrismas = misPrisma;
+	}
+
+	public ArrayList<Users> getMisUsuarios() {
+		return misUsuarios;
+	}
+
+	public void setMisUsuarios(ArrayList<Users> misUsuario) {
+		misUsuarios = misUsuario;
+	}
+
 	public void addPrisma(Prisma prisma) {
 		misPrismas.add(prisma);
 	}
@@ -48,42 +81,6 @@ public class Centro implements Serializable {
 		misUsuarios.add(user);
 	}
 	
-	public void guardarDatos() throws IOException, ClassNotFoundException {
-
-		String url = urlEjecutable();
-
-		new File(url).mkdir();
-
-		FileOutputStream foCentro = new FileOutputStream(url + "//MisDatos1.dat");
-		ObjectOutputStream oosCentro = new ObjectOutputStream(foCentro);
-
-		oosCentro.writeObject(centro);
-
-		foCentro.close();
-
-	}
-	
-	public void cargarDatos() throws IOException, ClassNotFoundException {
-
-		String url = urlEjecutable();
-
-		FileInputStream fiEmpresa = new FileInputStream(url + "//MisDatos1.dat");
-		ObjectInputStream oisEmpresa = new ObjectInputStream(fiEmpresa);
-
-		centro = (Centro) oisEmpresa.readObject();
-		fiEmpresa.close();
-
-	}
-	
-	public String urlEjecutable() {
-
-
-		String url = new JFileChooser().getFileSystemView().getDefaultDirectory().toString() + "//Centro";
-
-		return url;
-
-	}
-
 	public boolean login(String usuario, String pass) {
 		boolean login = false;
 		
@@ -97,6 +94,10 @@ public class Centro implements Serializable {
 		}
 		
 		return login;
+	}
+
+	public static void leer() {
+		
 	}
 
 }

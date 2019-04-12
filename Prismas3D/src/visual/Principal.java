@@ -55,7 +55,10 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Calendar;
@@ -77,6 +80,7 @@ import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 import javax.swing.JInternalFrame;
+import java.awt.Toolkit;
 
 
 public class Principal extends JFrame implements Runnable{
@@ -124,7 +128,7 @@ public class Principal extends JFrame implements Runnable{
     private JLabel lblHora;
     private DefaultPieDataset data = new DefaultPieDataset();
     public final static JLabel lblGraf = new JLabel("");;
-    private static int contador=-1;
+    private JLabel lblFigura;
 	
 
 	/**
@@ -148,9 +152,45 @@ public class Principal extends JFrame implements Runnable{
 	 * Create the frame.
 	 */
 	public Principal() {
+		setTitle("PRISMAS 3D - GEOMETR\u00CDA DID\u00C1CTICA");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/resources/cubomulticolor.png")));
 		StdDraw3D.setBackground(StdDraw3D.GRAY);
         StdDraw3D.setInfoDisplay(false);
+        StdDraw3D.setPenColor();
 		setResizable(false);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    	System.out.println("Entre");
+		    	FileOutputStream f = null;
+				try {
+					f = new FileOutputStream(System.getProperty("user.dir")+"\\PRINCIPAL.dat");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				ObjectOutputStream oos = null;
+				try {
+					oos = new ObjectOutputStream (f);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					oos.writeObject(Centro.getInstance());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	    		
+	    		try {
+					oos.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		       System.exit(0);
+		    }
+		});
 		setBounds(new Rectangle(0, 0, 2147483647, 2147483647));
 		setMaximizedBounds(new Rectangle(0, 0, 2147483647, 2147483647));
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -210,6 +250,33 @@ public class Principal extends JFrame implements Runnable{
 		JButton button = new JButton("Cerrar Sesi\u00F3n");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("Entre");
+				FileOutputStream f = null;
+				try {
+					f = new FileOutputStream(System.getProperty("user.dir")+"\\PRINCIPAL.dat");
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				ObjectOutputStream oos = null;
+				try {
+					oos = new ObjectOutputStream (f);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					oos.writeObject(Centro.getInstance());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}	    		
+	    		try {
+					oos.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				dispose();
 				Login logueo = new Login();
 				logueo.setVisible(true);
@@ -662,6 +729,7 @@ public class Principal extends JFrame implements Runnable{
 		rdbtnCuadrado.setHorizontalAlignment(SwingConstants.CENTER);
 		rdbtnCuadrado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				lblFigura.setIcon(new ImageIcon(Principal.class.getResource("/resources/cuadrado.png")));
 				rdbtnCuadrado.setSelected(true);
 				rdbtnRectan.setSelected(false);
 				rdbtnTriangulo.setSelected(false);
@@ -685,6 +753,7 @@ public class Principal extends JFrame implements Runnable{
 		rdbtnRectan.setHorizontalAlignment(SwingConstants.CENTER);
 		rdbtnRectan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				lblFigura.setIcon(new ImageIcon(Principal.class.getResource("/resources/rectangulo.png")));
 				rdbtnCuadrado.setSelected(false);
 				rdbtnRectan.setSelected(true);
 				rdbtnTriangulo.setSelected(false);
@@ -706,6 +775,7 @@ public class Principal extends JFrame implements Runnable{
 		 rdbtnTriangulo.setHorizontalAlignment(SwingConstants.CENTER);
 		 rdbtnTriangulo.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
+		 		lblFigura.setIcon(new ImageIcon(Principal.class.getResource("/resources/triangulo.png")));
 		 		rdbtnCuadrado.setSelected(false);
 		 		rdbtnRectan.setSelected(false);
 		 		rdbtnTriangulo.setSelected(true);
@@ -727,6 +797,7 @@ public class Principal extends JFrame implements Runnable{
 		 rdbtnTrapecio.setHorizontalAlignment(SwingConstants.CENTER);
 		 rdbtnTrapecio.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
+		 		lblFigura.setIcon(new ImageIcon(Principal.class.getResource("/resources/trapecio.png")));
 		 		rdbtnCuadrado.setSelected(false);
 		 		rdbtnRectan.setSelected(false);
 		 		rdbtnTriangulo.setSelected(false);
@@ -748,6 +819,7 @@ public class Principal extends JFrame implements Runnable{
 		 rdbtnRombo.setHorizontalAlignment(SwingConstants.CENTER);
 		 rdbtnRombo.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
+		 		lblFigura.setIcon(new ImageIcon(Principal.class.getResource("/resources/rombo.png")));
 		 		rdbtnCuadrado.setSelected(false);
 		 		rdbtnRectan.setSelected(false);
 		 		rdbtnTriangulo.setSelected(false);
@@ -777,7 +849,7 @@ public class Principal extends JFrame implements Runnable{
 		 label_27.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		 
 		 txtRNombre = new JTextField();
-		 txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.misPrismas.size()));
+		 txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.getInstance().getMisPrismas().size()));
 		 txtRNombre.setBounds(161, 108, 184, 20);
 		 panelRegistrar.add(txtRNombre);
 		 txtRNombre.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -830,7 +902,7 @@ public class Principal extends JFrame implements Runnable{
 			 			spnr_x1cuad.setValue(0);
 			 			spnr_y1cuad.setValue(0);
 			 			spnr_ladoCuad.setValue(1);
-			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.misPrismas.size()));
+			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.getInstance().getMisPrismas().size()));
 		 			}catch(Exception e1) {
 		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
 		 			}
@@ -852,7 +924,7 @@ public class Principal extends JFrame implements Runnable{
 			 			spnr_y1rect.setValue(0);
 			 			spnr_ladoArect.setValue(1);
 			 			spnr_ladoBrect.setValue(1);
-			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.misPrismas.size()));
+			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.getInstance().getMisPrismas().size()));
 		 			}catch(Exception e1) {
 		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
 		 			}
@@ -874,7 +946,7 @@ public class Principal extends JFrame implements Runnable{
 			 			spnr_y1rombo.setValue(0);
 			 			spnr_Drombo.setValue(1);
 			 			spnr_drombo.setValue(1);
-			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.misPrismas.size()));
+			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.getInstance().getMisPrismas().size()));
 		 			}catch(Exception e1) {
 		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
 		 			}
@@ -900,7 +972,7 @@ public class Principal extends JFrame implements Runnable{
 			 			spnr_y2trap.setValue(0);
 			 			spnr_Btrap.setValue(1);
 			 			spnr_btrap.setValue(1);
-			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.misPrismas.size()));
+			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.getInstance().getMisPrismas().size()));
 		 			}catch(Exception e1) {
 		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
 		 			}
@@ -924,7 +996,7 @@ public class Principal extends JFrame implements Runnable{
 			 			spnr_x2trian.setValue(0);
 			 			spnr_y2trian.setValue(0);
 			 			spnr_basetrian.setValue(1);
-			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.misPrismas.size()));
+			 			txtRNombre.setText("Mi_prisma_"+Integer.toString(Centro.getInstance().getMisPrismas().size()));
 		 			}catch(Exception e1) {
 		 				JOptionPane.showMessageDialog(null, "Revise los datos ingresados.", "Aviso", JOptionPane.WARNING_MESSAGE);
 		 			}
@@ -936,6 +1008,11 @@ public class Principal extends JFrame implements Runnable{
 		 });
 		 btnNewButton.setBounds(778, 580, 89, 23);
 		 panelRegistrar.add(btnNewButton);
+		 
+		 lblFigura = new JLabel("New label");
+		 lblFigura.setIcon(new ImageIcon(Principal.class.getResource("/resources/cuadrado.png")));
+		 lblFigura.setBounds(907, 377, 151, 151);
+		 panelRegistrar.add(lblFigura);
 		
 		panelGraficar = new JPanel();
 		panelGraficar.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.LIGHT_GRAY));
@@ -1074,29 +1151,29 @@ public class Principal extends JFrame implements Runnable{
 				int index = cbxSelectPrism.getSelectedIndex();
 				System.out.println(index);
 				if(index>0) {
-					Prisma prisma = Centro.misPrismas.get(index-1);
+					Prisma prisma = Centro.getInstance().getMisPrismas().get(index-1);
 					txtDNombre.setText(prisma.getNombre());
 					txtDBase.setText(prisma.getfiguraBase());
-					txtDAltura.setText(Float.toString(prisma.getAltura()));
-					txtDAreal.setText(Float.toString(prisma.areaLateral()));
-					txtAreab.setText(Float.toString(prisma.areaBase()));
-					txtAreat.setText(Float.toString(prisma.areaTotal()));
-					txtDVolumen.setText(Float.toString(prisma.volumen()));
+					txtDAltura.setText(Float.toString(prisma.getAltura())+" M");
+					txtDAreal.setText(Float.toString(prisma.areaLateral())+" M^2");
+					txtAreab.setText(Float.toString(prisma.areaBase())+" M^2");
+					txtAreat.setText(Float.toString(prisma.areaTotal())+" M^2");
+					txtDVolumen.setText(Float.toString(prisma.volumen())+" M^3");
 					
 					if(prisma instanceof Cuadrangular) {
 						constCuadrangular(((Cuadrangular) prisma).getX1(),((Cuadrangular) prisma).getY1(),((Cuadrangular) prisma).getLado(),prisma.getAltura());
 					}
 					if(prisma instanceof Rectangular) {
-						
+						constRectangular(((Rectangular) prisma).getX1(),((Rectangular) prisma).getY1(), prisma.getAltura(), ((Rectangular) prisma).getLadoA(), ((Rectangular) prisma).getLadob());
 					}
 					if(prisma instanceof Romboidal) {
-						
+						contRomboidal(((Romboidal) prisma).getX1(), ((Romboidal) prisma).getY1(), prisma.getAltura(), ((Romboidal) prisma).getD(), ((Romboidal) prisma).getd());
 					}
 					if(prisma instanceof Trapezoidal) {
-						
+						constTrapezoidal(((Trapezoidal) prisma).getX1(), ((Trapezoidal) prisma).getY1(), ((Trapezoidal) prisma).getX2(), ((Trapezoidal) prisma).getY2(), prisma.getAltura(), ((Trapezoidal) prisma).getBaseMayor(), ((Trapezoidal) prisma).getBaseMenor());
 					}
 					if(prisma instanceof Triangular) {
-						
+						constTriangular(((Triangular) prisma).getX1(), ((Triangular) prisma).getY1(), ((Triangular) prisma).getX3(), ((Triangular) prisma).getY3(), prisma.getAltura(), ((Triangular) prisma).getBase());						
 					}
 				}else {
 					txtDNombre.setText("");
@@ -1108,6 +1185,217 @@ public class Principal extends JFrame implements Runnable{
 					txtDVolumen.setText("");
 					seleccione();
 				}
+			}
+
+			private void constTriangular(float x1, float y1, float x3, float y3, float alt, float base) {
+				StdDraw3D.clearOverlay();
+				StdDraw3D.clear();
+				StdDraw3D.setCameraOrientation(0, 0, 0);
+				
+				double x2 = x1+base;
+				double y2 = y1;
+				
+				if(alt>base) {
+					StdDraw3D.setScale(-alt, alt);
+				}else {
+					StdDraw3D.setScale(-base,base);
+				}
+							    
+			    double xb1[] = new double[]{x1,x2,x3};
+			    double yb1[] = new double[]{y1,y2,y3};
+			    double zb1[] = new double[]{0,0,0};
+			    StdDraw3D.polygon(xb1,yb1,zb1);
+			    double xb2[] = new double[]{x1,x2,x3};
+			    double yb2[] = new double[]{y1,y2,y3};
+			    double zb2[] = new double[]{alt,alt,alt};
+			    StdDraw3D.polygon(xb2,yb2,zb2);
+			    double xl1[] = new double[]{x1,x2,x2,x1};
+			    double yl1[] = new double[]{y1,y2,y2,y1};
+			    double zl1[] = new double[]{0,0,alt,alt};
+			    StdDraw3D.polygon(xl1,yl1,zl1);
+			    double xl2[] = new double[]{x2,x3,x3,x2};
+			    double yl2[] = new double[]{y2,y3,y3,y2};
+			    double zl2[] = new double[]{0,0,alt,alt};
+			    StdDraw3D.polygon(xl2,yl2,zl2);
+			    double xl3[] = new double[]{x3,x1,x1,x3};
+			    double yl3[] = new double[]{y3,y1,y1,y3};
+			    double zl3[] = new double[]{0,0,alt,alt};
+			    StdDraw3D.polygon(xl3,yl3,zl3);
+			    StdDraw3D.setOrbitCenter(((x1+x2)/2),((y1+y3)/2),alt/2);
+			    if(alt>=base) {
+			    	StdDraw3D.setCameraPosition(((x1+x2)/2),((y1+y3)/2),alt+3);
+			    }else {
+			    	StdDraw3D.setCameraPosition(((x1+x2)/2),((y1+y3)/2),base+8);
+			    }
+			    StdDraw3D.show();
+				
+			}
+
+			private void constTrapezoidal(float x1, float y1, float x2, float y2, float alt, float B, float b) {
+				
+				StdDraw3D.clearOverlay();
+				StdDraw3D.clear();
+				StdDraw3D.setCameraOrientation(0, 0, 0);
+				
+				double x3,x4;
+		        double y3, y4;
+		        
+		        x3 = x2 + b;
+		        x4 = x1 + B;
+		        y3 = y2;
+		        y4 = y1; 
+		        
+		        if(B>b) {
+		        	StdDraw3D.setScale(-B,B);
+		        }else {
+		            StdDraw3D.setScale(-b,b);
+		        }
+		        
+		        double xb1[] = new double[]{x1,x2,x3,x4};
+		        double yb1[] = new double[]{y1,y2,y3,y4};
+		        double zb1[] = new double[]{0,0,0,0};
+		        StdDraw3D.polygon(xb1,yb1,zb1);
+		        double xb2[] = new double[]{x1,x2,x3,x4};
+		        double yb2[] = new double[]{y1,y2,y3,y4};
+		        double zb2[] = new double[]{alt,alt,alt,alt};
+		        StdDraw3D.polygon(xb2,yb2,zb2);
+		        double xl1[] = new double[]{x1,x2,x2,x1};
+		        double yl1[] = new double[]{y1,y2,y2,y1};
+		        double zl1[] = new double[]{0,0,alt,alt};
+		        StdDraw3D.polygon(xl1,yl1,zl1);
+		        double xl2[] = new double[]{x2,x3,x3,x2};
+		        double yl2[] = new double[]{y2,y3,y3,y2};
+		        double zl2[] = new double[]{0,0,alt,alt};
+		        StdDraw3D.polygon(xl2,yl2,zl2);
+		        double xl3[] = new double[]{x3,x4,x4,x3};
+		        double yl3[] = new double[]{y3,y4,y4,y3};
+		        double zl3[] = new double[]{0,0,alt,alt};
+		        StdDraw3D.polygon(xl3,yl3,zl3);
+		        double xl4[] = new double[]{x4,x1,x1,x4};
+		        double yl4[] = new double[]{y4,y1,y1,y4};
+		        double zl4[] = new double[]{0,0,alt,alt};
+		        StdDraw3D.polygon(xl4,yl4,zl4);
+		        
+		        StdDraw3D.setOrbitCenter(((x4-x1)/2),((y2-y1)/2),alt/2);
+		        
+		        if(alt>=B) {
+		        	StdDraw3D.setCameraPosition((x4-x1)/2,((y2-y1)/2),alt+3);
+		        }else {
+		        	StdDraw3D.setCameraPosition((x4-x1)/2,((y2-y1)/2),B+8);
+		        }
+		        StdDraw3D.show();
+				
+			}
+
+			private void contRomboidal(float x1, float y1, float alt, float D, float d) {
+				StdDraw3D.clearOverlay();
+				StdDraw3D.clear();
+				StdDraw3D.setCameraOrientation(0, 0, 0);
+				
+				double x2 = x1 - (d/2);
+				double y2 = y1 - (D/2);
+				double x3 = x1;
+				double y3 = y1 - D;
+				double x4 = x1 + (d/2);
+				double y4 = y2;
+				
+				if(D>d) {
+		        	StdDraw3D.setScale(-D,D);
+		        }else {
+		            StdDraw3D.setScale(-d,d);
+		        }
+			    double xb1[] = new double[]{x1,x2,x3,x4};
+			    double yb1[] = new double[]{y1,y2,y3,y4};
+			    double zb1[] = new double[]{0,0,0,0};
+			    StdDraw3D.polygon(xb1,yb1,zb1);
+			    double xb2[] = new double[]{x1,x2,x3,x4};
+			    double yb2[] = new double[]{y1,y2,y3,y4};
+			    double zb2[] = new double[]{alt,alt,alt,alt};
+			    StdDraw3D.polygon(xb2,yb2,zb2);
+			    double xl1[] = new double[]{x1,x2,x2,x1};
+			    double yl1[] = new double[]{y1,y2,y2,y1};
+			    double zl1[] = new double[]{0,0,alt,alt};
+			    StdDraw3D.polygon(xl1,yl1,zl1);
+			    double xl2[] = new double[]{x2,x3,x3,x2};
+			    double yl2[] = new double[]{y2,y3,y3,y2};
+			    double zl2[] = new double[]{0,0,alt,alt};
+			    StdDraw3D.polygon(xl2,yl2,zl2);
+			    double xl3[] = new double[]{x3,x4,x4,x3};
+			    double yl3[] = new double[]{y3,y4,y4,y3};
+			    double zl3[] = new double[]{0,0,alt,alt};
+			    StdDraw3D.polygon(xl3,yl3,zl3);
+			    double xl4[] = new double[]{x4,x1,x1,x4};
+			    double yl4[] = new double[]{y4,y1,y1,y4};
+			    double zl4[] = new double[]{0,0,alt,alt};
+			    StdDraw3D.polygon(xl4,yl4,zl4);
+			    StdDraw3D.setOrbitCenter(((x1+x3)/2),((y1+y3)/2),alt/2);
+			    if(alt>=D) {
+			    	StdDraw3D.setCameraPosition(((x1+x3)/2),((y1+y3)/2),alt+3);
+			    }else {
+			    	StdDraw3D.setCameraPosition(((x1+x3)/2),((y1+y3)/2),D+8);
+			    }
+			   
+			    StdDraw3D.show();
+				
+			}
+
+			private void constRectangular(float x1, float y1, float alt, float a, float b) {
+				
+				StdDraw3D.clearOverlay();
+				StdDraw3D.clear();
+				StdDraw3D.setCameraOrientation(0, 0, 0);
+				
+				double x2,x3,x4;
+		        double y2,y3, y4;
+		        x2 = x1;
+		        y2 = y1 - a;
+		        x3 = x2 + b;
+		        x4 = x1 + b;
+		        y3 = y2;
+		        y4 = y1; 
+		        
+		        StdDraw3D.setBackground(StdDraw3D.GRAY);
+		        StdDraw3D.setInfoDisplay(false);
+		        StdDraw3D.Camera cam = StdDraw3D.camera();
+		        if(alt>b) {
+		        	StdDraw3D.setScale(-alt,alt);
+		        }else {
+		            StdDraw3D.setScale(-b,b);
+		        }
+
+		        double xb1[] = new double[]{x1,x2,x3,x4};
+		        double yb1[] = new double[]{y1,y2,y3,y4};
+		        double zb1[] = new double[]{0,0,0,0};
+		        StdDraw3D.polygon(xb1,yb1,zb1);
+		        double xb2[] = new double[]{x1,x2,x3,x4};
+		        double yb2[] = new double[]{y1,y2,y3,y4};
+		        double zb2[] = new double[]{alt,alt,alt,alt};
+		        StdDraw3D.polygon(xb2,yb2,zb2);
+		        double xl1[] = new double[]{x1,x2,x2,x1};
+		        double yl1[] = new double[]{y1,y2,y2,y1};
+		        double zl1[] = new double[]{0,0,alt,alt};
+		        StdDraw3D.polygon(xl1,yl1,zl1);
+		        double xl2[] = new double[]{x2,x3,x3,x2};
+		        double yl2[] = new double[]{y2,y3,y3,y2};
+		        double zl2[] = new double[]{0,0,alt,alt};
+		        StdDraw3D.polygon(xl2,yl2,zl2);
+		        double xl3[] = new double[]{x3,x4,x4,x3};
+		        double yl3[] = new double[]{y3,y4,y4,y3};
+		        double zl3[] = new double[]{0,0,alt,alt};
+		        StdDraw3D.polygon(xl3,yl3,zl3);
+		        double xl4[] = new double[]{x4,x1,x1,x4};
+		        double yl4[] = new double[]{y4,y1,y1,y4};
+		        double zl4[] = new double[]{0,0,alt,alt};
+		        StdDraw3D.polygon(xl4,yl4,zl4);
+		        
+		        StdDraw3D.setOrbitCenter(((x1+x3)/2),((y1+y3)/2),alt/2);
+		        if(alt>=b) {
+		        	StdDraw3D.setCameraPosition(((x1+x3)/2),((y1+y3)/2),alt+3);
+		        }else {
+		        	StdDraw3D.setCameraPosition(((x1+x3)/2),((y1+y3)/2),b+8);
+		        }
+		        StdDraw3D.show();
+				
 			}
 
 			private void seleccione() {
@@ -1174,7 +1462,12 @@ public class Principal extends JFrame implements Runnable{
 		        double zl4[] = new double[]{0,0,alt,alt};
 		        Shape lado4 = StdDraw3D.polygon(xl4,yl4,zl4);
 		        StdDraw3D.setOrbitCenter((x3-(dist/2)),y4-(dist/2),alt/2);
-		        cam.setPosition((x3-(dist/2)),y4-(dist/2),alt+3);
+		        if(alt>dist) {
+		        	cam.setPosition((x3-(dist/2)),y4-(dist/2),alt+3);
+		        }else {
+		        	cam.setPosition((x3-(dist/2)),y4-(dist/2),dist+8);
+		        }
+		        
 		        StdDraw3D.show();
 				
 			}
@@ -1247,6 +1540,33 @@ public class Principal extends JFrame implements Runnable{
 		JButton btnNewButton_1 = new JButton("Cerrar Sesi\u00F3n");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("Entre");
+				FileOutputStream f = null;
+				try {
+					f = new FileOutputStream(System.getProperty("user.dir")+"\\PRINCIPAL.dat");
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				ObjectOutputStream oos = null;
+				try {
+					oos = new ObjectOutputStream (f);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					oos.writeObject(Centro.getInstance());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}	    		
+	    		try {
+					oos.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				dispose();
 				Login logueo = new Login();
 				logueo.setVisible(true);
@@ -1263,6 +1583,46 @@ public class Principal extends JFrame implements Runnable{
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String user,pass,pass2,tipo;
+				boolean existe = false;
+				user = txtUsuario.getText();
+				pass = txtPass.getText();
+				pass2 = txtPass2.getText();
+				tipo = comboBoxTipo.getSelectedItem().toString();
+				for(Users us: Centro.getInstance().getMisUsuarios()) {
+					if(us.getUserName().equalsIgnoreCase(user)) {
+						existe = true;
+					}
+				}
+				if(Centro.firstTime && tipo.equals("Profesor")) {
+					int index;
+					for(int i=0;i<Centro.getInstance().getMisUsuarios().size();i++) {
+						if(Centro.getInstance().getMisUsuarios().get(i).getUserName().equals("admin")) {
+							index = i;
+							Centro.getInstance().getMisUsuarios().remove(i);
+							Centro.firstTime = false;
+						}
+					}
+				} 
+				Centro.firstTime = false;
+				if(user.equals("") || pass.equals("") || pass2.equals("") || comboBoxTipo.getSelectedIndex()==0) {
+					JOptionPane.showMessageDialog(null, "Por favor ingrese todos los datos","Informacion" ,JOptionPane.INFORMATION_MESSAGE);
+				}else {
+				if(!existe) {
+					if(pass.equals(pass2)) {
+						Users aux = new Users(tipo,user,pass);
+						Centro.getInstance().addUser(aux);
+						JOptionPane.showMessageDialog(null, "Usuario creado satisfactoriamente!","Informacion" ,JOptionPane.INFORMATION_MESSAGE);
+						txtUsuario.setText("");
+						txtPass.setText("");
+						txtPass2.setText("");
+						comboBoxTipo.setSelectedIndex(0);
+					}else {
+						JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","Informacion" ,JOptionPane.INFORMATION_MESSAGE);
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "El nombre de usuario ya existe","Informacion" ,JOptionPane.INFORMATION_MESSAGE);
+				}}
 				
 			}
 		});
@@ -1282,7 +1642,7 @@ public class Principal extends JFrame implements Runnable{
 		comboBoxTipo.setBackground(new Color(105,105,105));
 		comboBoxTipo.setForeground(Color.WHITE);
 		comboBoxTipo.setFont(new Font("Tahoma", Font.BOLD, 12));
-		comboBoxTipo.setModel(new DefaultComboBoxModel(new String[] {"          <Seleccionar>", "             Profesor", "             Estudiante"}));
+		comboBoxTipo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccionar>", "Profesor", "Estudiante"}));
 		comboBoxTipo.setSelectedIndex(0);
 		comboBoxTipo.setBounds(290, 415, 183, 20);
 		panelCuentas.add(comboBoxTipo);
@@ -1364,7 +1724,7 @@ public class Principal extends JFrame implements Runnable{
 				cbxSelectPrism.removeAllItems();
 				cbxSelectPrism.insertItemAt(new String("<Seleccione>"), 0);
 				cbxSelectPrism.setSelectedIndex(0);
-				for(Prisma prisma: Centro.getInstance().misPrismas) {
+				for(Prisma prisma: Centro.getInstance().getMisPrismas()) {
 					cbxSelectPrism.addItem(prisma.getNombre()+": "+prisma.getfiguraBase());
 				}
 				
@@ -1613,13 +1973,12 @@ public class Principal extends JFrame implements Runnable{
 	
 	public static void cargarGraf() {
 		int cuad=0,rect=0,trap=0,romb=0,trian=0;
-		for(Prisma prisma: Centro.misPrismas) {
+		for(Prisma prisma: Centro.getInstance().getMisPrismas()) {
 			if(prisma instanceof Cuadrangular) {
 				cuad++;
 			}
 			if(prisma instanceof Rectangular) {
 				rect++;
-				contador++;
 			}
 			if(prisma instanceof Romboidal) {
 				romb++;
@@ -1645,13 +2004,13 @@ public class Principal extends JFrame implements Runnable{
          true, 
          false);
         try {
-        	Files.deleteIfExists(Paths.get(System.getProperty("user.dir")+"\\grafico"+(Centro.misPrismas.size()-1)+".jpg"));
+        	Files.deleteIfExists(Paths.get(System.getProperty("user.dir")+"\\grafico"+(Centro.getInstance().getMisPrismas().size()-1)+".jpg"));
         }catch(Exception e) {
         	System.out.println("File not found");
         }
         try {
-			ChartUtilities.saveChartAsJPEG(new File("grafico"+Centro.misPrismas.size()+".jpg"), chart, 689, 570);
-			lblGraf.setIcon(new ImageIcon(System.getProperty("user.dir")+"\\grafico"+Centro.misPrismas.size()+".jpg")); 
+			ChartUtilities.saveChartAsJPEG(new File("grafico"+Centro.getInstance().getMisPrismas().size()+".jpg"), chart, 689, 570);
+			lblGraf.setIcon(new ImageIcon(System.getProperty("user.dir")+"\\grafico"+Centro.getInstance().getMisPrismas().size()+".jpg")); 
 		} catch (IOException e) {
 			System.out.println("Me jodi");
 			e.printStackTrace();

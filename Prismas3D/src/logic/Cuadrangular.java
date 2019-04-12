@@ -2,6 +2,14 @@ package logic;
 
 public class Cuadrangular extends Prisma {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -296027855736122143L;
+	/**
+	 * 
+	 */
+
 	private float x1,y1;
 	private float lado;
 	

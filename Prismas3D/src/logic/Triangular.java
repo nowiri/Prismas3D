@@ -2,6 +2,14 @@ package logic;
 
 public class Triangular extends Prisma {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8932918175321095523L;
+	/**
+	 * 
+	 */
+
 	float x1,y1,x3,y3;
 	float base,h,lado1,lado2;
 

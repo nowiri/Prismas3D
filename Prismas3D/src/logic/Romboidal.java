@@ -2,6 +2,14 @@ package logic;
 
 public class Romboidal extends Prisma {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3931513659071289665L;
+	/**
+	 * 
+	 */
+
 	private float x1,y1;
 	private float lado,D,d;
 	

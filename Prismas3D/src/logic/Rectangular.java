@@ -2,6 +2,10 @@ package logic;
 
 public class Rectangular extends Prisma {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -958833596414557726L;
 	private float x1,y1;
 	private float ladoA, ladob;
 
