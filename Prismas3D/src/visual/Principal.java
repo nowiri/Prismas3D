@@ -81,6 +81,9 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 import javax.swing.JInternalFrame;
 import java.awt.Toolkit;
+import javax.swing.JTextPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 
 public class Principal extends JFrame implements Runnable{
@@ -153,7 +156,7 @@ public class Principal extends JFrame implements Runnable{
 	 */
 	public Principal() {
 		setTitle("PRISMAS 3D - GEOMETR\u00CDA DID\u00C1CTICA");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/resources/cubomulticolor.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/resources/3dddddddddddddddddddd.png")));
 		StdDraw3D.setBackground(StdDraw3D.GRAY);
         StdDraw3D.setInfoDisplay(false);
         StdDraw3D.setPenColor();
@@ -234,7 +237,7 @@ public class Principal extends JFrame implements Runnable{
 			JLabel lblUsuarioLogin = new JLabel(Centro.getLoginUser().getUserName());
 			lblUsuarioLogin.setForeground(new Color(105,105,105));
 			lblUsuarioLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblUsuarioLogin.setBounds(184, 555, 139, 14);
+			lblUsuarioLogin.setBounds(130, 589, 139, 14);
 			panelPrincipal.add(lblUsuarioLogin);
 		}catch(Exception e) {
 			
@@ -244,56 +247,14 @@ public class Principal extends JFrame implements Runnable{
 		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHora.setForeground(new Color(105,105,105));
 		lblHora.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblHora.setBounds(141, 535, 85, 14);
+		lblHora.setBounds(87, 569, 85, 14);
 		panelPrincipal.add(lblHora);
-				
-		JButton button = new JButton("Cerrar Sesi\u00F3n");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Entre");
-				FileOutputStream f = null;
-				try {
-					f = new FileOutputStream(System.getProperty("user.dir")+"\\PRINCIPAL.dat");
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				ObjectOutputStream oos = null;
-				try {
-					oos = new ObjectOutputStream (f);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				try {
-					oos.writeObject(Centro.getInstance());
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}	    		
-	    		try {
-					oos.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				dispose();
-				Login logueo = new Login();
-				logueo.setVisible(true);
-				logueo.setLocationRelativeTo(null);
-			}
-		});
-		button.setForeground(Color.WHITE);
-		button.setFont(new Font("Tahoma", Font.BOLD, 12));
-		button.setBackground(SystemColor.controlDkShadow);
-		button.setBounds(110, 580, 154, 23);
-		panelPrincipal.add(button);
 		
 		JLabel lblTipo = new JLabel("New label");
 		lblTipo.setForeground(new Color(105,105,105));
 		
 		lblTipo.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblTipo.setBounds(64, 555, 120, 14);
+		lblTipo.setBounds(10, 589, 120, 14);
 		try {
 			lblTipo.setText(Centro.getLoginUser().getTipo()+":");
 		}catch(Exception e){
@@ -312,7 +273,7 @@ public class Principal extends JFrame implements Runnable{
 		}catch(Exception e){
 			
 		}
-		lblImagen.setBounds(97, 144, 265, 256);
+		lblImagen.setBounds(87, 142, 265, 256);
 		panelPrincipal.add(lblImagen);
 		
 		JPanel panel_2 = new JPanel();
@@ -1488,9 +1449,18 @@ public class Principal extends JFrame implements Runnable{
 		pnlContenido.add(panelGeometría, "name_81822588113893");
 		panelGeometría.setLayout(null);
 		
-		JLabel lblNewLabel_6 = new JLabel("GEOMETRIA");
-		lblNewLabel_6.setBounds(0, 0, 129, 14);
-		panelGeometría.add(lblNewLabel_6);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		scrollPane.setBackground(Color.WHITE);
+		scrollPane.setBounds(0, 0, 1105, 614);
+		panelGeometría.add(scrollPane);
+		
+		JTextArea txtrPrismasEnGeometra = new JTextArea();
+		txtrPrismasEnGeometra.setEditable(false);
+		txtrPrismasEnGeometra.setBackground(Color.WHITE);
+		txtrPrismasEnGeometra.setTabSize(7);
+		txtrPrismasEnGeometra.setText("PRISMAS\r\nEn geometr\u00EDa, un prisma es un poliedro con una base poligonal de n lados, una copia de traslaci\u00F3n (no en el mismo plano que la primera), y otras n caras (todas necesariamente deben ser paralelogramos) que une los lados correspondientes de las dos bases. Todas las secciones transversales paralelas a las caras de la base son iguales. Los prismas se nombran por la forma de su base, por lo que un prisma de base pentagonal se llama prisma pentagonal. Los prismas son una subclase de los prismatoides. Un prisma verifica las siguientes exigencias:\r\n1.\tExisten exactamente dos caras congruentes sobre planos paralelos, se las nombra bases.\r\n2.\tTodas las dem\u00E1s caras son paralelogramos. \r\n \r\nVOLUMEN\r\nEl volumen de un prisma es el producto del \u00E1rea de la base por la distancia o altura entre las dos bases. Su valor se expresa como:\r\n \r\ndonde B es el \u00E1rea de la base y h es la altura. El volumen de un prisma, cuya base es un pol\u00EDgono regular de n lados con una longitud de lado s, es:\r\n \r\nPRISMAS RECTOS Y UNIFORMES GENERALES\r\nUn prisma recto es un prisma en el que los bordes de uni\u00F3n y las caras son perpendiculares a las caras de la base. Esto se aplica si las caras de uni\u00F3n son rectangulares. Si los bordes de uni\u00F3n y las caras no son perpendiculares a las caras de la base, se llama prisma oblicuo.\r\nAlgunos textos pueden aplicar el t\u00E9rmino de prisma rectangular o prisma cuadrado tanto a un prisma rectangular de lado derecho como a un prisma unilateral cuadrado derecho. El t\u00E9rmino prisma uniforme puede utilizarse para un prisma recto con lados cuadrados, ya que tales prismas est\u00E1n en el conjunto de poliedros uniforme.\r\nUn prisma de n caras laterales con extremos de pol\u00EDgonos regulares y caras rectangulares, se acerca un s\u00F3lido cil\u00EDndrico cuando n tiende a infinito.\r\nLos prismas rectos con bases regulares y longitudes iguales bordes forman una de las dos series infinitas de poliedros semirregulares, las otras series son los antiprismas.\r\n\r\n\r\n\r\n\r\nA un prisma rectangular recto tambi\u00E9n se lo conoce como cuboides, o informalmente caja rectangular. Un prisma cuadrado derecho es simplemente una caja cuadrada, y tambi\u00E9n puede ser llamado un cuboide cuadrado. Los prismas son poliedros que constan de dos caras iguales y paralelas llamadas bases, y de caras laterales que son paralelogramos.\r\nCada prisma consta de los siguientes elementos:\r\nBases: son las dos caras iguales y paralelas del prisma, una en la que se apoya y la otra su opuesta.\r\nCaras laterales: son las caras que comparten dos de sus lados con las bases. La suma de sus \u00E1reas es la superficie lateral del prisma. \r\nAristas: son los lados de las bases y de las caras laterales. \r\nV\u00E9rtices: son los puntos en donde se encuentran cada par de aristas. \r\nAltura: es la distancia entre las bases. \r\nDiagonales: son los segmentos que unen dos v\u00E9rtices no consecutivos del prisma. Se pueden trazar las diagonales de una cara o entre dos caras.\r\n");
+		scrollPane.setViewportView(txtrPrismasEnGeometra);
 		
 		panelCuentas = new JPanel();
 		panelCuentas.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.LIGHT_GRAY));
@@ -1898,12 +1868,23 @@ public class Principal extends JFrame implements Runnable{
 		lblNewLabel_1.setBounds(302, 18, 500, 39);
 		pnlHome.add(lblNewLabel_1);
 		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(Principal.class.getResource("/resources/cube-design (4).png")));
+		lblNewLabel_2.setBounds(400, 11, 43, 57);
+		pnlHome.add(lblNewLabel_2);
+		
+		JLabel label_33 = new JLabel("");
+		label_33.setIcon(new ImageIcon(Principal.class.getResource("/resources/cube-design (4).png")));
+		label_33.setBounds(666, 11, 43, 57);
+		pnlHome.add(label_33);
+		
 		pnlRegistrar = new JPanel();
 		pnlRegistrar.setBackground(new Color(0, 151, 167));
 		pnlTitulo.add(pnlRegistrar, "name_80858031575147");
 		pnlRegistrar.setLayout(new CardLayout(0, 0));
 		
-		JLabel lblRegistrar = new JLabel("REGISTRAR");
+		JLabel lblRegistrar = new JLabel("  REGISTRAR");
+		lblRegistrar.setIcon(new ImageIcon(Principal.class.getResource("/resources/folder (7).png")));
 		lblRegistrar.setBounds(new Rectangle(302, 18, 500, 39));
 		lblRegistrar.setBackground(Color.WHITE);
 		lblRegistrar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1916,7 +1897,8 @@ public class Principal extends JFrame implements Runnable{
 		pnlTitulo.add(pnlGraficar, "name_80868735605440");
 		pnlGraficar.setLayout(new CardLayout(0, 0));
 		
-		JLabel lblGraficar = new JLabel("GRAFICAR");
+		JLabel lblGraficar = new JLabel("   GRAFICAR");
+		lblGraficar.setIcon(new ImageIcon(Principal.class.getResource("/resources/modeling (9).png")));
 		lblGraficar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGraficar.setForeground(Color.WHITE);
 		lblGraficar.setFont(new Font("Tahoma", Font.BOLD, 28));
@@ -1929,6 +1911,7 @@ public class Principal extends JFrame implements Runnable{
 		pnlGeometria.setLayout(new CardLayout(0, 0));
 		
 		JLabel lblGeometra = new JLabel("GEOMETR\u00CDA");
+		lblGeometra.setIcon(new ImageIcon(Principal.class.getResource("/resources/reading (1).png")));
 		lblGeometra.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGeometra.setForeground(Color.WHITE);
 		lblGeometra.setFont(new Font("Tahoma", Font.BOLD, 28));
@@ -1940,7 +1923,8 @@ public class Principal extends JFrame implements Runnable{
 		pnlTitulo.add(pnlCuentas, "name_81027452984221");
 		pnlCuentas.setLayout(new CardLayout(0, 0));
 		
-		JLabel lblCuentas = new JLabel("CUENTAS");
+		JLabel lblCuentas = new JLabel("   CUENTAS");
+		lblCuentas.setIcon(new ImageIcon(Principal.class.getResource("/resources/user (5).png")));
 		lblCuentas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCuentas.setForeground(Color.WHITE);
 		lblCuentas.setFont(new Font("Tahoma", Font.BOLD, 28));
