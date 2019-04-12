@@ -123,7 +123,7 @@ public class Principal extends JFrame implements Runnable{
     private Calendar calendario;
     private JLabel lblHora;
     private DefaultPieDataset data = new DefaultPieDataset();
-    public final static JLabel lblGraf = new JLabel("New label");;
+    public final static JLabel lblGraf = new JLabel("");;
     private static int contador=-1;
 	
 
@@ -184,22 +184,27 @@ public class Principal extends JFrame implements Runnable{
 		panelPrincipal.setLayout(null);
 		
 		JLabel lblBienvenido = new JLabel("\u00A1Bienvenido!");
-		lblBienvenido.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblBienvenido.setBounds(169, 104, 120, 14);
+		lblBienvenido.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBienvenido.setForeground(new Color(105,105,105));
+		lblBienvenido.setFont(new Font("Tahoma", Font.BOLD, 22));
+		lblBienvenido.setBounds(106, 28, 193, 23);
 		panelPrincipal.add(lblBienvenido);
 		
 		try{
 			JLabel lblUsuarioLogin = new JLabel(Centro.getLoginUser().getUserName());
-			lblUsuarioLogin.setFont(new Font("Tahoma", Font.BOLD, 17));
-			lblUsuarioLogin.setBounds(227, 411, 139, 14);
+			lblUsuarioLogin.setForeground(new Color(105,105,105));
+			lblUsuarioLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
+			lblUsuarioLogin.setBounds(184, 555, 139, 14);
 			panelPrincipal.add(lblUsuarioLogin);
 		}catch(Exception e) {
 			
 		}
 		
-		lblHora = new JLabel("HORA");
-		lblHora.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblHora.setBounds(187, 436, 85, 14);
+		lblHora = new JLabel("HORA:");
+		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHora.setForeground(new Color(105,105,105));
+		lblHora.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblHora.setBounds(141, 535, 85, 14);
 		panelPrincipal.add(lblHora);
 				
 		JButton button = new JButton("Cerrar Sesi\u00F3n");
@@ -214,13 +219,14 @@ public class Principal extends JFrame implements Runnable{
 		button.setForeground(Color.WHITE);
 		button.setFont(new Font("Tahoma", Font.BOLD, 12));
 		button.setBackground(SystemColor.controlDkShadow);
-		button.setBounds(152, 461, 154, 23);
+		button.setBounds(110, 580, 154, 23);
 		panelPrincipal.add(button);
 		
 		JLabel lblTipo = new JLabel("New label");
+		lblTipo.setForeground(new Color(105,105,105));
 		
-		lblTipo.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblTipo.setBounds(107, 411, 120, 14);
+		lblTipo.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTipo.setBounds(64, 555, 120, 14);
 		try {
 			lblTipo.setText(Centro.getLoginUser().getTipo()+":");
 		}catch(Exception e){
@@ -229,7 +235,7 @@ public class Principal extends JFrame implements Runnable{
 
 		panelPrincipal.add(lblTipo);
 		
-		JLabel lblImagen = new JLabel("New label");
+		JLabel lblImagen = new JLabel("");
 		try {
 			if(Centro.getLoginUser().getTipo().equals("Profesor")) {
 				lblImagen.setIcon(new ImageIcon(Principal.class.getResource("/resources/teacher (1).png")));
@@ -299,7 +305,7 @@ public class Principal extends JFrame implements Runnable{
 		
 		final JSpinner spnr_x1cuad = new JSpinner();
 		spnr_x1cuad.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		spnr_x1cuad.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
+		spnr_x1cuad.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
 		spnr_x1cuad.setBounds(72, 68, 46, 27);
 		panelCuadrado.add(spnr_x1cuad);
 		
@@ -310,7 +316,7 @@ public class Principal extends JFrame implements Runnable{
 		
 		final JSpinner spnr_y1cuad = new JSpinner();
 		spnr_y1cuad.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		spnr_y1cuad.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
+		spnr_y1cuad.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
 		spnr_y1cuad.setBounds(220, 68, 46, 27);
 		panelCuadrado.add(spnr_y1cuad);
 		
@@ -939,7 +945,7 @@ public class Principal extends JFrame implements Runnable{
 		
 		JPanel panelBorde = new JPanel();
 		panelBorde.setBackground(Color.WHITE);
-		panelBorde.setForeground(Color.BLUE);
+		panelBorde.setForeground(new Color(0, 153, 153));
 		panelBorde.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "GR\u00C1FICA", TitledBorder.CENTER, TitledBorder.TOP, null, Color.BLACK));
 		panelBorde.setBounds(561, 11, 532, 592);
 		panelGraficar.add(panelBorde);
@@ -951,47 +957,55 @@ public class Principal extends JFrame implements Runnable{
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
-		panel_1.setBorder(new TitledBorder(null, "DATOS DEL PRISMA", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "DATOS DEL PRISMA", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 		panel_1.setBounds(64, 145, 432, 422);
 		panelGraficar.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lblNombre = new JLabel("NOMBRE:");
+		lblNombre.setForeground(Color.DARK_GRAY);
 		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNombre.setBounds(32, 40, 75, 14);
 		panel_1.add(lblNombre);
 		
 		JLabel lblBase = new JLabel("BASE:");
+		lblBase.setForeground(Color.DARK_GRAY);
 		lblBase.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblBase.setBounds(32, 94, 58, 14);
 		panel_1.add(lblBase);
 		
 		JLabel lblAltura = new JLabel("ALTURA:");
+		lblAltura.setForeground(Color.DARK_GRAY);
 		lblAltura.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblAltura.setBounds(32, 148, 75, 14);
 		panel_1.add(lblAltura);
 		
 		JLabel lblAreaLateral = new JLabel("AREA LATERAL:");
+		lblAreaLateral.setForeground(Color.DARK_GRAY);
 		lblAreaLateral.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblAreaLateral.setBounds(32, 202, 102, 14);
 		panel_1.add(lblAreaLateral);
 		
 		JLabel lblAreaTotal = new JLabel("AREA TOTAL:");
+		lblAreaTotal.setForeground(Color.DARK_GRAY);
 		lblAreaTotal.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblAreaTotal.setBounds(32, 310, 102, 14);
 		panel_1.add(lblAreaTotal);
 		
 		JLabel lblAreaDeLa = new JLabel("AREA BASE:");
+		lblAreaDeLa.setForeground(Color.DARK_GRAY);
 		lblAreaDeLa.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblAreaDeLa.setBounds(32, 256, 102, 14);
 		panel_1.add(lblAreaDeLa);
 		
 		JLabel lblVo = new JLabel("VOLUMEN:");
+		lblVo.setForeground(Color.DARK_GRAY);
 		lblVo.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblVo.setBounds(32, 364, 86, 14);
 		panel_1.add(lblVo);
 		
 		txtDNombre = new JTextField();
+		txtDNombre.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtDNombre.setBackground(Color.WHITE);
 		txtDNombre.setEditable(false);
 		txtDNombre.setBounds(161, 37, 231, 20);
@@ -999,6 +1013,7 @@ public class Principal extends JFrame implements Runnable{
 		txtDNombre.setColumns(10);
 		
 		txtDBase = new JTextField();
+		txtDBase.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtDBase.setBackground(Color.WHITE);
 		txtDBase.setEditable(false);
 		txtDBase.setColumns(10);
@@ -1006,6 +1021,7 @@ public class Principal extends JFrame implements Runnable{
 		panel_1.add(txtDBase);
 		
 		txtDAltura = new JTextField();
+		txtDAltura.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtDAltura.setBackground(Color.WHITE);
 		txtDAltura.setForeground(Color.BLACK);
 		txtDAltura.setEditable(false);
@@ -1014,6 +1030,7 @@ public class Principal extends JFrame implements Runnable{
 		panel_1.add(txtDAltura);
 		
 		txtDAreal = new JTextField();
+		txtDAreal.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtDAreal.setBackground(Color.WHITE);
 		txtDAreal.setForeground(Color.BLACK);
 		txtDAreal.setEditable(false);
@@ -1022,6 +1039,7 @@ public class Principal extends JFrame implements Runnable{
 		panel_1.add(txtDAreal);
 		
 		txtAreab = new JTextField();
+		txtAreab.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtAreab.setBackground(Color.WHITE);
 		txtAreab.setForeground(Color.BLACK);
 		txtAreab.setEditable(false);
@@ -1030,6 +1048,7 @@ public class Principal extends JFrame implements Runnable{
 		panel_1.add(txtAreab);
 		
 		txtAreat = new JTextField();
+		txtAreat.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtAreat.setBackground(Color.WHITE);
 		txtAreat.setForeground(Color.BLACK);
 		txtAreat.setEditable(false);
@@ -1038,6 +1057,7 @@ public class Principal extends JFrame implements Runnable{
 		panel_1.add(txtAreat);
 		
 		txtDVolumen = new JTextField();
+		txtDVolumen.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtDVolumen.setBackground(Color.WHITE);
 		txtDVolumen.setForeground(Color.BLACK);
 		txtDVolumen.setEditable(false);
@@ -1046,6 +1066,9 @@ public class Principal extends JFrame implements Runnable{
 		panel_1.add(txtDVolumen);
 		
 		cbxSelectPrism = new JComboBox();
+		cbxSelectPrism.setBackground(new Color(105,105,105));
+		cbxSelectPrism.setForeground(Color.WHITE);
+		cbxSelectPrism.setFont(new Font("Tahoma", Font.BOLD, 12));
 		cbxSelectPrism.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index = cbxSelectPrism.getSelectedIndex();
@@ -1161,6 +1184,7 @@ public class Principal extends JFrame implements Runnable{
 		panelGraficar.add(cbxSelectPrism);
 		
 		JLabel lblSeleccioneElPrisma = new JLabel("PRISMA A GRAFICAR:");
+		lblSeleccioneElPrisma.setForeground(Color.DARK_GRAY);
 		lblSeleccioneElPrisma.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblSeleccioneElPrisma.setBounds(64, 86, 168, 14);
 		panelGraficar.add(lblSeleccioneElPrisma);
@@ -1508,7 +1532,7 @@ public class Principal extends JFrame implements Runnable{
 		pnlHome.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("PRISMAS 3D");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 28));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 28));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setBounds(302, 18, 500, 39);
@@ -1524,7 +1548,7 @@ public class Principal extends JFrame implements Runnable{
 		lblRegistrar.setBackground(Color.WHITE);
 		lblRegistrar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRegistrar.setForeground(Color.WHITE);
-		lblRegistrar.setFont(new Font("Tahoma", Font.PLAIN, 28));
+		lblRegistrar.setFont(new Font("Tahoma", Font.BOLD, 28));
 		pnlRegistrar.add(lblRegistrar, "name_81571125740572");
 		
 		pnlGraficar = new JPanel();
@@ -1535,7 +1559,7 @@ public class Principal extends JFrame implements Runnable{
 		JLabel lblGraficar = new JLabel("GRAFICAR");
 		lblGraficar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGraficar.setForeground(Color.WHITE);
-		lblGraficar.setFont(new Font("Tahoma", Font.PLAIN, 28));
+		lblGraficar.setFont(new Font("Tahoma", Font.BOLD, 28));
 		lblGraficar.setBounds(302, 18, 500, 39);
 		pnlGraficar.add(lblGraficar, "name_81575709736667");
 		
@@ -1547,7 +1571,7 @@ public class Principal extends JFrame implements Runnable{
 		JLabel lblGeometra = new JLabel("GEOMETR\u00CDA");
 		lblGeometra.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGeometra.setForeground(Color.WHITE);
-		lblGeometra.setFont(new Font("Tahoma", Font.PLAIN, 28));
+		lblGeometra.setFont(new Font("Tahoma", Font.BOLD, 28));
 		lblGeometra.setBounds(302, 18, 500, 39);
 		pnlGeometria.add(lblGeometra, "name_81579765087775");
 		
@@ -1559,7 +1583,7 @@ public class Principal extends JFrame implements Runnable{
 		JLabel lblCuentas = new JLabel("CUENTAS");
 		lblCuentas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCuentas.setForeground(Color.WHITE);
-		lblCuentas.setFont(new Font("Tahoma", Font.PLAIN, 28));
+		lblCuentas.setFont(new Font("Tahoma", Font.BOLD, 28));
 		lblCuentas.setBounds(302, 18, 500, 39);
 		pnlCuentas.add(lblCuentas, "name_81583263617228");
 		

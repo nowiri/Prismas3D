@@ -25,6 +25,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Login extends JDialog {
 
@@ -97,6 +99,29 @@ public class Login extends JDialog {
 		txtUser.setColumns(10);
 		
 		txtPassw = new JPasswordField();
+		txtPassw.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if (arg0.getKeyCode()== KeyEvent.VK_ENTER) {
+					
+					if(Centro.getInstance().login(txtUser.getText(), txtPassw.getText())){
+						Principal frame = new Principal();
+						Principal.cargarGraf();
+						if(Centro.getLoginUser().getTipo().equals("Estudiante")) {
+							frame.mntmRegistrar.setEnabled(false);
+							frame.mntmCuentas.setEnabled(false);
+						}
+						dispose();
+						frame.setVisible(true);
+					}else {
+						
+						lblLogin.setVisible(true);
+						txtPassw.setText("");
+					}
+				}
+				}
+			
+		});
 		txtPassw.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -161,12 +186,37 @@ public class Login extends JDialog {
 		lblNewLabel_3.setBounds(78, 183, 46, 42);
 		panel_1.add(lblNewLabel_3);
 		
-		lblLogin = new JLabel("<html><p>COMBINACION DE USUARIO Y CONTRASE\u00D1A INVALIDA O NO ENCONTRADA</p><html>");
+		lblLogin = new JLabel("<html><p>COMBINACION DE USUARIO Y CONTRASE\u00D1A         INVALIDA O NO ENCONTRADA</p><html>");
+		lblLogin.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin.setVisible(false);
 		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblLogin.setBounds(90, 226, 269, 50);
-		lblLogin.setForeground(Color.decode("#D8000C"));
+		lblLogin.setForeground(new Color(204, 0, 0));
 		panel_1.add(lblLogin);
+		
+		JLabel lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+            txtPassw.setEchoChar((char)0);
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				txtPassw.setEchoChar('*');
+			}
+		});
+		/*lblNewLabel_4.addMouseListener(new MouseAdapter() {
+			
+		public void mouseClicked(MouseEvent arg0) {
+				
+				
+			}
+		});*/
+			
+		lblNewLabel_4.setIcon(new ImageIcon(Login.class.getResource("/resources/eye (2).png")));
+		lblNewLabel_4.setBounds(354, 187, 33, 28);
+		panel_1.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(Login.class.getResource("/resources/3d (6).png")));

@@ -1,4 +1,5 @@
 package logic;
+import java.io.Serializable;
 
 public abstract class Prisma {
 	

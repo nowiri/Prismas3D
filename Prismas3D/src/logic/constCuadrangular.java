@@ -1,6 +1,7 @@
 package logic;
 
 import logic.StdDraw3D.Shape;
+import java.io.Serializable;
 
 public class constCuadrangular {
     public static void main(String[] args) {
